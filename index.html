@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFF8EE">
+  <title>quedi minhas coisas: achados e perdidos da cidade num só lugar</title>
+  <meta name="description" content="Perdeu ou achou alguma coisa? O quedi minhas coisas junta os achados e perdidos da cidade, encontra itens parecidos com o seu e ajuda na devolução segura.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <div class="progress-bar" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html" translate="no" data-logo><span class="brand-name">quedi minhas coisas</span></a>
+      <nav class="site-nav" aria-label="Principal">
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#mapa">Mapa</a>
+        <a href="#achados">Achados</a>
+        <a href="#recompensas">Recompensas</a>
+        <a href="#instituicoes">Instituições</a>
+        <a class="btn btn-lago btn-small" href="app.html">Abrir o site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Perdeu ou achou alguma coisa?</h1>
+          <p class="lead">Todo objeto perdido tem alguém procurando por ele. O quedi minhas coisas junta os achados e perdidos da cidade num só lugar. Conte o que aconteceu e a gente avisa quem pode ajudar.</p>
+          <div class="tags">
+            <a class="tag tag-lost" href="app.html#perdi">
+              <span class="tag-text"><span class="tag-title">Perdi algo</span><span class="tag-sub">Veja itens parecidos</span></span>
+            </a>
+            <a class="tag tag-found" href="app.html#achei">
+              <span class="tag-text"><span class="tag-title">Achei algo</span><span class="tag-sub">Ajude ele a voltar</span></span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <figure class="hero-photo">
+            <img src="assets/img/fone-biblioteca.jpg" width="960" height="1280" fetchpriority="high"
+                 alt="Mão segurando um estojo de fone sem fio branco, aberto, dentro da Biblioteca Municipal">
+            <figcaption class="photo-tag">Achado na Biblioteca Municipal<br><span>Hoje, 14h · fone sem fio no estojo</span></figcaption>
+          </figure>
+          <div class="hope" aria-live="polite">
+            <span class="hope-dot" aria-hidden="true"></span>
+            <span>Este fone já foi mostrado para <strong data-count="30">30 pessoas</strong> que procuram algo parecido.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAIXA DE ACHADOS ===== -->
+    <section class="marquee" aria-label="Itens achados agora">
+      <div class="marquee-track">
+        <ul class="m-set">
+          <li class="m-item"><img src="assets/img/fone-biblioteca-sq.jpg" width="360" height="360" alt=""><span><strong>Fone sem fio</strong><br><small>Biblioteca Municipal · hoje, 14h</small></span></li>
+          <li class="m-item"><div class="thumb" data-icon="chaves"></div><span><strong>Chaves com chaveiro de gato</strong><br><small>Shopping Ponte Verde · ontem, 18h</small></span></li>
+          <li class="m-item"><img src="assets/img/carteira-furb-sq.jpg" width="360" height="360" alt=""><span><strong>Carteira de couro marrom</strong><br><small>FURB, Campus 1 · hoje, 9h</small></span></li>
+          <li class="m-item"><div class="thumb" data-icon="guardachuva"></div><span><strong>Guarda-chuva verde</strong><br><small>Terminal Rodoviário · há 2 dias</small></span></li>
+          <li class="m-item"><img src="assets/img/celular-shopping-sq.jpg" width="360" height="360" alt=""><span><strong>Celular com capinha transparente</strong><br><small>Shopping Ponte Verde · hoje, 11h</small></span></li>
+          <li class="m-item"><div class="thumb" data-icon="oculos"></div><span><strong>Óculos de grau</strong><br><small>FURB, Campus 1 · há 4 dias</small></span></li>
+          <li class="m-item"><div class="thumb" data-icon="mochila"></div><span><strong>Mochila azul-marinho</strong><br><small>Biblioteca Municipal · ontem, 16h</small></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== COMO FUNCIONA (tela fixa com o protótipo animado) ===== -->
+    <section class="story" id="como-funciona" aria-labelledby="t-story">
+      <div class="wrap story-grid">
+        <div class="story-text">
+          <h2 id="t-story">Três passos, sem complicação</h2>
+          <p class="lead">Quem perdeu algo está com pressa e preocupado. Por isso o caminho é curto e cada tela faz uma coisa só.</p>
+          <ol class="story-steps">
+            <li><h3>Conte o que perdeu</h3><p>Cor, marca, modelo, um arranhão, um adesivo. Quanto mais detalhes, melhor. Fotos também ajudam.</p></li>
+            <li><h3>Veja os itens parecidos</h3><p>Assim que você termina, mostramos os achados que combinam com a sua descrição, do mais ao menos parecido.</p></li>
+            <li><h3>Combine a devolução</h3><p>Converse pelo chat anônimo, prove que é seu e escolha como buscar: numa Estação, numa instituição ou num lugar público.</p></li>
+          </ol>
+        </div>
+
+        <div class="story-stage" aria-hidden="true">
+          <div class="screen screen-0" data-ui>
+            <p class="screen-title">O que você perdeu?</p>
+            <div class="chip-row"><span class="chip">Celular</span><span class="chip is-pick">Carteira</span><span class="chip">Chaves</span><span class="chip">Fone</span></div>
+            <div class="mock-field"><span class="mock-label">Nome do item</span><span class="mock-input"><span data-type>Carteira de couro marrom</span><i class="caret"></i></span></div>
+            <div class="mock-field"><span class="mock-label">Cor principal</span><div class="dots"><i style="--c:#222"></i><i style="--c:#fff"></i><i style="--c:#2F6DB5"></i><i class="is-pick" style="--c:#8A5A3B"></i><i style="--c:#C8413B"></i></div></div>
+            <div class="mock-field"><span class="mock-label">Detalhes</span><span class="mock-input mock-soft">Costura laranja, canto gasto</span></div>
+            <span class="btn btn-lago mock-btn">Ver itens parecidos</span>
+          </div>
+
+          <div class="screen screen-1" data-ui>
+            <div class="hope"><span class="hope-dot"></span><span>Encontramos <strong>3 itens parecidos</strong> com a sua carteira.</span></div>
+            <ul class="mock-list">
+              <li class="match-row"><img class="thumb-photo" src="assets/img/carteira-furb-sq.jpg" width="360" height="360" alt=""><div><strong>Carteira de couro marrom</strong><br><span class="muted small">FURB · hoje, 9h</span><div class="bar"><span style="--p:.94"></span></div></div><div class="match-pct"><span data-pct="94">94%</span><small>parecido</small></div></li>
+              <li class="match-row"><div class="thumb" data-icon="carteira"></div><div><strong>Carteira preta com zíper</strong><br><span class="muted small">Terminal Rodoviário · 2 dias</span><div class="bar"><span style="--p:.63"></span></div></div><div class="match-pct"><span data-pct="63">63%</span><small>parecido</small></div></li>
+              <li class="match-row"><div class="thumb" data-icon="documentos"></div><div><strong>Porta-cartões marrom</strong><br><span class="muted small">Shopping Ponte Verde · 3 dias</span><div class="bar"><span style="--p:.48"></span></div></div><div class="match-pct"><span data-pct="48">48%</span><small>parecido</small></div></li>
+            </ul>
+          </div>
+
+          <div class="screen screen-2" data-ui>
+            <div class="chip chip-menta">Dono confirmado</div>
+            <div class="chat-mock">
+              <div class="msg them"><small>Marina (quem achou)</small>Achei hoje cedo na FURB e guardei direitinho.</div>
+              <div class="msg me"><small>Você</small>Que alívio! Posso buscar numa Estação?</div>
+              <div class="msg them"><small>Marina (quem achou)</small>Pode sim. Deixo lá até as 18h.</div>
+            </div>
+            <div class="pickup">
+              <div class="code">Q7·4K2</div>
+              <p class="muted small">Código de retirada na Estação quedi Centro, Rua das Flores, 120</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MAPA VIVO ===== -->
+    <section class="section" id="mapa" aria-labelledby="t-mapa">
+      <div class="wrap map-live">
+        <div class="map-copy">
+          <h2 id="t-mapa" data-reveal>Marque onde perdeu e avisamos quem passou</h2>
+          <p class="lead" data-reveal>Faculdades, shoppings, rodoviárias e bibliotecas cadastram aqui os itens que chegam ao balcão. Perdeu num lugar sem balcão? Toque no mapa.</p>
+          <div class="hope hope-big" data-reveal aria-live="polite">
+            <span class="hope-dot" aria-hidden="true"></span>
+            <span id="notified">Toque no mapa para ver quantas pessoas seriam avisadas.</span>
+          </div>
+          <p class="muted small" data-reveal style="margin:1.2rem 0 .6rem">Ou escolha um ponto de referência:</p>
+          <div class="landmarks" id="landmarks" data-reveal></div>
+        </div>
+        <div class="map-live-box" id="live-map" data-reveal></div>
+      </div>
+    </section>
+
+    <!-- ===== ACHADOS DA SEMANA ===== -->
+    <section class="section section-alt" id="achados" aria-labelledby="t-achados">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="t-achados" data-reveal>Achados desta semana</h2>
+          <p class="lead" data-reveal>Cada item aparece com foto, lugar e horário. Quem perdeu reconhece na hora.</p>
+        </div>
+        <div class="found-wall">
+          <figure class="found-big">
+            <img src="assets/img/carteira-furb.jpg" width="960" height="1280" loading="lazy" alt="Mão segurando uma carteira de couro marrom no saguão da FURB">
+            <figcaption class="photo-tag">Carteira de couro marrom<br><span>Achada na FURB, Campus 1 · hoje, 9h</span></figcaption>
+          </figure>
+          <figure class="found-small">
+            <img src="assets/img/celular-shopping.jpg" width="960" height="1280" loading="lazy" alt="Mão segurando um celular branco com capinha transparente num corredor de shopping">
+            <figcaption class="photo-tag">Celular com capinha transparente<br><span>Achado no Shopping Ponte Verde · hoje, 11h</span></figcaption>
+          </figure>
+          <div class="found-note" data-reveal>
+            <h3>É seu?</h3>
+            <p>Abra o item, conte um detalhe que só o dono sabe e combine a devolução pelo chat anônimo.</p>
+            <a class="btn btn-lago" href="app.html#inicio">Ver todos os achados</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEVOLUÇÃO SEGURA + ESTAÇÃO ===== -->
+    <section class="section" id="seguranca" aria-labelledby="t-seg">
+      <div class="wrap station-grid">
+        <div class="station-copy">
+          <h2 id="t-seg" data-reveal>Devolução segura para os dois lados</h2>
+          <p class="lead" data-reveal>Ninguém precisa trocar telefone nem marcar encontro em lugar estranho.</p>
+          <div class="secret-row" data-reveal>
+            <img src="assets/img/fone-detalhe.jpg" width="720" height="688" loading="lazy" alt="Estojo de fone branco de perto, com pequenas manchas na tampa">
+            <div>
+              <h3>Só o dono sabe</h3>
+              <p>Ao cadastrar o item, você guarda uma característica em segredo, como uma mancha na tampa ou o papel de parede do celular. Para levar o item, é preciso acertar esse detalhe ou mandar uma foto antiga dele.</p>
+            </div>
+          </div>
+          <div data-reveal>
+            <h3>Chat anônimo</h3>
+            <p>Vocês conversam pelo site sem mostrar nome completo, telefone ou endereço.</p>
+          </div>
+          <div data-reveal>
+            <h3>Encontro em lugar público</h3>
+            <p>Se preferirem se encontrar, sugerimos lugares movimentados e horário comercial.</p>
+          </div>
+        </div>
+
+        <div class="station-card" data-reveal>
+          <h3>Estações quedi</h3>
+          <p>Pequenos pontos espalhados pela cidade, como uma lavanderia de bairro. Quem achou deixa o item. Quem perdeu busca com um código, sem encontrar ninguém.</p>
+          <div class="lockers-live" role="group" aria-label="Compartimentos de uma Estação quedi. Toque para abrir.">
+            <button class="locker" type="button" aria-expanded="false" aria-label="Abrir compartimento vazio"><span class="inside"></span><span class="door"></span></button>
+            <button class="locker is-full" type="button" aria-expanded="false" aria-label="Abrir compartimento com uma carteira"><span class="inside" data-icon="carteira"></span><span class="door"></span></button>
+            <button class="locker" type="button" aria-expanded="false" aria-label="Abrir compartimento vazio"><span class="inside"></span><span class="door"></span></button>
+            <button class="locker" type="button" aria-expanded="false" aria-label="Abrir compartimento vazio"><span class="inside"></span><span class="door"></span></button>
+            <button class="locker" type="button" aria-expanded="false" aria-label="Abrir compartimento vazio"><span class="inside"></span><span class="door"></span></button>
+            <button class="locker is-full" type="button" aria-expanded="false" aria-label="Abrir compartimento com chaves"><span class="inside" data-icon="chaves"></span><span class="door"></span></button>
+            <button class="locker" type="button" aria-expanded="false" aria-label="Abrir compartimento vazio"><span class="inside"></span><span class="door"></span></button>
+            <button class="locker is-full" type="button" aria-expanded="false" aria-label="Abrir compartimento com um fone"><span class="inside" data-icon="fone"></span><span class="door"></span></button>
+          </div>
+          <div class="station-foot">
+            <div>
+              <div class="code" id="station-code" role="img" aria-label="Código de retirada: Q 7, 4, K 2">Q7·4K2</div>
+            </div>
+            <p class="small">Mostre o código na Estação para retirar. Quem entregou pode pedir uma recompensa opcional de até R$ 10 pelo esforço.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RECOMPENSAS ===== -->
+    <section class="section section-alt" id="recompensas" aria-labelledby="t-rec">
+      <div class="wrap rewards">
+        <div>
+          <h2 id="t-rec" data-reveal>Devolver vale a pena</h2>
+          <p class="lead" data-reveal>Muita coisa achada nunca volta porque dá trabalho devolver. Aqui, quem ajuda recebe um agradecimento de verdade.</p>
+          <ul class="reward-list">
+            <li data-reveal><div class="ico" data-icon="moeda"></div><div><h3>Pontos que viram dinheiro</h3><p>Cada devolução soma pontos, que você troca por Pix ou vale-presente.</p></div></li>
+            <li data-reveal><div class="ico" data-icon="cafe"></div><div><h3>Café por nossa conta</h3><p>Devolveu algo achado numa instituição parceira? Ganha um café cortesia na cantina de lá.</p></div></li>
+            <li data-reveal><div class="ico" data-icon="estrela"></div><div><h3>Perfil verificado e avaliado</h3><p>Como nos apps de transporte: foto, conta verificada e nota de quem já recebeu algo de volta.</p></div></li>
+            <li data-reveal><div class="ico" data-icon="coracao"></div><div><h3>Selos de gratidão</h3><p>Cada item devolvido rende selos no perfil, como Grande ajudante e Guardião do bairro.</p></div></li>
+          </ul>
+        </div>
+
+        <div class="panel rewards-live" data-ui data-reveal>
+          <div class="profile-top">
+            <div class="avatar">VC</div>
+            <div><strong>Seu perfil</strong><br><span class="verified" data-icon-inline="escudo">Conta verificada</span></div>
+          </div>
+          <div class="points-row">
+            <div class="points"><b id="pts">40</b><span>pontos</span></div>
+            <span class="muted small" id="pts-next" aria-live="polite">Faltam 60 pontos para um café na cantina</span>
+          </div>
+          <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" aria-label="Progresso até o café na cantina"><span id="meter-fill"></span></div>
+          <div class="seals" id="seals">
+            <span class="seal is-locked" data-need="1"><i data-icon="estrela"></i>Primeira devolução</span>
+            <span class="seal is-locked" data-need="2"><i data-icon="cafe"></i>Café na cantina</span>
+            <span class="seal is-locked" data-need="5"><i data-icon="coracao"></i>Grande ajudante</span>
+          </div>
+          <button class="btn btn-sol" type="button" id="sim-return">Simular uma devolução</button>
+          <p class="hint">Demonstração: cada devolução vale 30 pontos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INSTITUIÇÕES ===== -->
+    <section class="section" id="instituicoes" aria-labelledby="t-inst">
+      <div class="wrap">
+        <div class="inst">
+          <div>
+            <h2 id="t-inst" data-reveal>Sua instituição no mapa</h2>
+            <p class="lead" data-reveal>Tem um balcão de achados e perdidos? Coloque ele online. Quem cuida do balcão cadastra os itens que chegam, e os donos acham pelo site antes de ir até lá.</p>
+            <ul class="checks" data-reveal>
+              <li>Painel simples para cadastrar itens com foto</li>
+              <li>Menos gente no balcão só para perguntar</li>
+              <li>Recompensas como café na cantina para quem devolve</li>
+            </ul>
+            <p style="margin-top:1.6rem" data-reveal><a class="btn btn-lago" href="app.html#mapa">Ver instituições no mapa</a></p>
+          </div>
+          <div class="inst-panel" data-ui aria-label="Exemplo do painel da instituição">
+            <div class="inst-head"><strong>FURB, Campus 1</strong><span class="chip chip-menta">3 itens cadastrados hoje</span></div>
+            <ul class="inst-list">
+              <li><img class="thumb-photo" src="assets/img/carteira-furb-sq.jpg" width="360" height="360" alt=""><div><strong>Carteira de couro marrom</strong><br><span class="muted small">Entregue no balcão às 9h</span></div><span class="chip chip-sol">No ar</span></li>
+              <li><div class="thumb" data-icon="outro"></div><div><strong>Garrafa térmica azul</strong><br><span class="muted small">Entregue no balcão às 10h30</span></div><span class="chip chip-sol">No ar</span></li>
+              <li><div class="thumb" data-icon="documentos"></div><div><strong>Caderno de capa verde</strong><br><span class="muted small">Entregue no balcão às 11h10</span></div><span class="chip chip-sol">No ar</span></li>
+            </ul>
+            <span class="btn btn-lago mock-btn">Cadastrar item</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section section-alt" aria-labelledby="t-faq">
+      <div class="wrap faq-grid">
+        <div class="section-head">
+          <h2 id="t-faq" data-reveal>Perguntas frequentes</h2>
+          <p class="lead" data-reveal>Respostas curtas para as dúvidas mais comuns de quem perdeu ou achou alguma coisa.</p>
+        </div>
+        <div class="faq" data-reveal>
+          <details>
+            <summary>Quanto custa usar?</summary>
+            <p>Cadastrar um item perdido ou achado é de graça. A única taxa é a recompensa opcional de até R$ 10 que quem achou pode pedir ao deixar o item numa Estação.</p>
+          </details>
+          <details>
+            <summary>Como vocês sabem que o item é meu?</summary>
+            <p>No cadastro, você guarda uma característica que não aparece para ninguém. Para retirar o item, você precisa acertar esse detalhe ou mandar uma foto em que o item aparece.</p>
+          </details>
+          <details>
+            <summary>Meu telefone fica visível?</summary>
+            <p>Não. Toda conversa acontece pelo chat anônimo do site. Você decide se quer compartilhar mais alguma coisa.</p>
+          </details>
+          <details>
+            <summary>E se eu perdi num lugar sem achados e perdidos?</summary>
+            <p>Marque no mapa onde acha que perdeu, com dia e hora. As pessoas que passaram perto desse ponto recebem um aviso para ficar de olho.</p>
+          </details>
+          <details>
+            <summary>O que é uma Estação quedi?</summary>
+            <p>Um ponto físico pequeno, como uma lavanderia de bairro ou uma agência dos Correios. Serve para a cidade toda: quem achou deixa o item lá, e o dono busca com um código.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FINAL ===== -->
+    <section class="section final" aria-labelledby="t-final">
+      <div class="wrap">
+        <h2 id="t-final" data-reveal>Vamos começar?</h2>
+        <p class="lead" data-reveal>Leva poucos minutos. Assim que terminar, seu item já aparece para quem está por perto.</p>
+        <div class="tags" data-reveal>
+          <a class="tag tag-lost" href="app.html#perdi"><span class="tag-text"><span class="tag-title">Perdi algo</span><span class="tag-sub">Veja itens parecidos</span></span></a>
+          <a class="tag tag-found" href="app.html#achei"><span class="tag-text"><span class="tag-title">Achei algo</span><span class="tag-sub">Ajude ele a voltar</span></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot site-foot-big">
+    <div class="wrap">
+      <p class="wordmark" translate="no" aria-hidden="true">quedi minhas coisas</p>
+      <p class="muted small foot-note">Projeto acadêmico de design. Conceito de produto, sem serviço real. As fotos são ilustrativas, geradas por IA. Itens, nomes e avaliações são exemplos.</p>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/motion.js"></script>
+</body>
+</html>

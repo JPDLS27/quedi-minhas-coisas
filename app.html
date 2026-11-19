@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFF8EE">
+  <title>quedi minhas coisas — protótipo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-app">
+  <a class="skip" href="#app">Pular para o conteúdo</a>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html" translate="no" data-logo><span class="brand-name">quedi minhas coisas</span></a>
+      <nav class="site-nav" aria-label="Principal">
+        <a href="#inicio" data-nav="inicio">Início</a>
+        <a href="#mapa" data-nav="mapa">Mapa</a>
+        <a href="#perfil" data-nav="perfil">Meu perfil</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" class="app-main" tabindex="-1">
+    <div class="wrap">
+
+      <!-- ================= INÍCIO ================= -->
+      <section class="view" id="v-inicio" aria-labelledby="t-inicio">
+        <div class="narrow" style="max-width:820px">
+          <h1 id="t-inicio">O que aconteceu?</h1>
+          <p class="lead">Escolha uma opção. A gente guia você no resto.</p>
+          <div class="map-box home-map" id="home-map"></div>
+          <p class="hint home-map-note">Pontos de achados e perdidos de instituições e Estações quedi perto de você.</p>
+          <div class="tags" style="margin:1.6rem 0 3rem">
+            <a class="tag tag-lost" href="#perdi"><span class="tag-text"><span class="tag-title">Perdi algo</span><span class="tag-sub">Descreva o item e veja os achados parecidos</span></span></a>
+            <a class="tag tag-found" href="#achei"><span class="tag-text"><span class="tag-title">Achei algo</span><span class="tag-sub">Cadastre o item e ajude ele a voltar</span></span></a>
+          </div>
+          <h2 style="font-size:1.4rem">Achados recentes perto de você</h2>
+          <div class="items" id="recent"></div>
+        </div>
+      </section>
+
+      <!-- ================= PERDI ================= -->
+      <section class="view" id="v-perdi" aria-labelledby="t-perdi">
+        <div class="narrow">
+          <a class="back" href="#inicio" data-icon-inline="seta">Voltar</a>
+          <h1 id="t-perdi" style="font-size:2.2rem">Vamos encontrar seu item</h1>
+          <p class="progress-label" id="lost-step-label">Passo 1 de 4</p>
+          <div class="progress" id="lost-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+          <form id="lost-form" novalidate>
+            <!-- passo 1 -->
+            <fieldset class="step" data-step="1" style="border:0;padding:0;margin:0">
+              <legend class="sr-only">O que você perdeu</legend>
+              <h2 style="font-size:1.5rem">O que você perdeu?</h2>
+              <div class="choices" id="lost-cats"></div>
+              <div class="field" style="margin-top:1.4rem">
+                <label for="lost-name">Dê um nome curto ao item</label>
+                <input type="text" id="lost-name" name="lost-name" autocomplete="off" placeholder="Ex.: Mochila azul da faculdade…">
+              </div>
+            </fieldset>
+
+            <!-- passo 2 -->
+            <fieldset class="step" data-step="2" style="border:0;padding:0;margin:0" hidden>
+              <legend class="sr-only">Detalhes do item</legend>
+              <h2 style="font-size:1.5rem">Como ele é?</h2>
+              <p class="muted">Quanto mais detalhes, mais certeiros ficam os itens parecidos.</p>
+              <div class="field">
+                <span class="label" id="lbl-cor">Cor principal</span>
+                <div class="swatches" role="radiogroup" aria-labelledby="lbl-cor" id="lost-colors"></div>
+              </div>
+              <div class="row-2">
+                <div class="field"><label for="lost-brand">Marca</label><input type="text" id="lost-brand" name="lost-brand" autocomplete="off" placeholder="Ex.: Samsonite…"></div>
+                <div class="field"><label for="lost-model">Modelo</label><input type="text" id="lost-model" name="lost-model" autocomplete="off" placeholder="Ex.: com bolso lateral…"></div>
+              </div>
+              <div class="field">
+                <label for="lost-marks">Marcas, defeitos ou detalhes visíveis</label>
+                <textarea id="lost-marks" name="lost-marks" autocomplete="off" placeholder="Ex.: adesivo de planeta, zíper da frente quebrado…"></textarea>
+              </div>
+              <div class="field">
+                <span class="label">Fotos (opcional)</span>
+                <label class="upload">
+                  <span data-icon-inline="camera" style="width:32px;color:var(--lago)"></span>
+                  <strong>Adicionar fotos do item</strong>
+                  <span class="hint">Pode ser uma foto antiga em que ele aparece</span>
+                  <input type="file" accept="image/*" multiple id="lost-photos">
+                </label>
+                <div class="previews" id="lost-previews"></div>
+              </div>
+            </fieldset>
+
+            <!-- passo 3 -->
+            <fieldset class="step" data-step="3" style="border:0;padding:0;margin:0" hidden>
+              <legend class="sr-only">Onde e quando</legend>
+              <h2 style="font-size:1.5rem">Onde e quando você perdeu?</h2>
+              <div class="choices choices-wide" style="margin-bottom:1.4rem">
+                <div class="choice">
+                  <input type="radio" name="where" id="where-inst" value="inst" checked>
+                  <label for="where-inst"><span class="ic" data-icon="predio"></span><span>Num lugar com achados e perdidos<small>Faculdade, shopping, rodoviária, biblioteca…</small></span></label>
+                </div>
+                <div class="choice">
+                  <input type="radio" name="where" id="where-map" value="map">
+                  <label for="where-map"><span class="ic" data-icon="pin"></span><span>Em outro lugar<small>Marque no mapa e avisamos quem passou por perto</small></span></label>
+                </div>
+              </div>
+              <div id="where-inst-box" class="field">
+                <label for="lost-inst">Qual lugar?</label>
+                <select id="lost-inst" name="lost-inst" autocomplete="off"></select>
+              </div>
+              <div id="where-map-box" hidden>
+                <p class="hint" style="margin-bottom:.6rem">Toque no mapa onde acha que perdeu.</p>
+                <div class="map-box pickable" id="lost-map"></div>
+                <p class="hint" style="margin-top:.8rem">Ou escolha um ponto de referência:</p>
+                <div class="landmarks" id="landmarks"></div>
+                <p class="hint" id="lost-map-msg" aria-live="polite" style="margin-top:.6rem"></p>
+              </div>
+              <div class="row-2" style="margin-top:1.2rem">
+                <div class="field"><label for="lost-date">Dia</label><input type="date" id="lost-date" name="lost-date" autocomplete="off"></div>
+                </div>
+              <div class="row-2" style="margin-top:1rem">
+                <div class="field"><label for="lost-from">Entre as</label><input type="time" id="lost-from" name="lost-from" autocomplete="off" value="13:00"></div>
+                <div class="field"><label for="lost-to">e as</label><input type="time" id="lost-to" name="lost-to" autocomplete="off" value="15:00"></div>
+              </div>
+              <p class="hint" id="lost-time-hint">Informe o período em que você acha que perdeu. Quanto menor o intervalo, mais fácil de avisar quem passou por lá.</p>
+            </fieldset>
+
+            <!-- passo 4 -->
+            <fieldset class="step" data-step="4" style="border:0;padding:0;margin:0" hidden>
+              <legend class="sr-only">Característica secreta</legend>
+              <h2 style="font-size:1.5rem">Um detalhe que só você sabe</h2>
+              <div class="secret">
+                <strong data-icon-inline="cadeado" style="display:flex;gap:.5rem;align-items:center">Isso não aparece para ninguém</strong>
+                <p class="hint">Vamos usar esse detalhe para confirmar que o item é seu na hora da devolução. Pode ser algo que tem dentro, uma mancha, um rasgo, uma senha de tela.</p>
+                <label class="sr-only" for="lost-secret">Característica secreta</label>
+                <textarea id="lost-secret" name="lost-secret" autocomplete="off" placeholder="Ex.: tem um caderno verde com meu nome na primeira página…"></textarea>
+              </div>
+            </fieldset>
+
+            <p class="hint" id="lost-error" role="alert" style="color:#B3261E;margin-top:1rem"></p>
+            <div class="form-actions">
+              <button type="button" class="btn btn-quiet" id="lost-prev" hidden>Voltar</button>
+              <button type="submit" class="btn btn-lago" id="lost-next" style="margin-left:auto">Continuar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= RESULTADOS (MATCH) ================= -->
+      <section class="view" id="v-resultados" aria-labelledby="t-res">
+        <div class="hope" aria-live="polite" style="margin-bottom:1.6rem">
+          <span class="hope-dot" aria-hidden="true"></span>
+          <span id="res-hope">Seu item já está sendo mostrado para <strong>0 pessoas</strong> por perto.</span>
+        </div>
+        <h1 id="t-res" style="font-size:2.2rem">Achamos itens parecidos com o seu</h1>
+        <p class="lead" id="res-lead">Veja se algum deles é seu. Se não for, fique tranquilo: avisamos assim que chegar algo novo.</p>
+        <div class="items" id="res-items"></div>
+        <div class="panel" style="margin-top:2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <span data-icon-inline="sino" style="width:28px;color:var(--lago)"></span>
+          <p style="margin:0;flex:1;min-width:220px"><strong>Nenhum é o seu?</strong> Seu cadastro continua ativo e você recebe um aviso quando surgir um item parecido.</p>
+          <a class="btn btn-ghost btn-small" href="#perfil">Ver meus itens</a>
+        </div>
+      </section>
+
+      <!-- ================= ITEM + CHAT ================= -->
+      <section class="view" id="v-item" aria-labelledby="t-item">
+        <a class="back" href="#resultados" data-icon-inline="seta">Voltar aos parecidos</a>
+        <div class="detail">
+          <div>
+            <div class="thumb" id="item-thumb"></div>
+            <h1 id="t-item" style="font-size:1.9rem;margin-top:1.2rem"></h1>
+            <dl class="facts" id="item-facts"></dl>
+            <div class="panel" style="margin-top:1.4rem">
+              <p class="muted small" style="margin-bottom:.6rem">Quem achou</p>
+              <div class="profile-mini">
+                <div class="avatar">MR</div>
+                <div>
+                  <strong>Marina R.</strong> <span class="verified" data-icon-inline="escudo">Verificada</span><br>
+                  <span class="rating small">Nota 4,9</span> <span class="small">em 14 devoluções</span>
+                </div>
+              </div>
+              <div class="seals" style="margin-top:.9rem">
+                <span class="seal"><i data-icon="coracao"></i>Grande ajudante</span>
+                <span class="seal"><i data-icon="pin"></i>Guardião do bairro</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <!-- etapa A: validação -->
+            <div id="item-validate">
+              <h2 style="font-size:1.4rem">É seu? Confirme um detalhe</h2>
+              <p class="muted">Conte algo que só o dono saberia: o que tem dentro, uma mancha, um rasgo. Ou envie uma foto em que o item aparece.</p>
+              <form id="validate-form">
+                <div class="field">
+                  <label for="validate-text">Característica</label>
+                  <textarea id="validate-text" name="validate-text" autocomplete="off" placeholder="Ex.: tem um caderno verde com meu nome dentro…"></textarea>
+                </div>
+                <label class="upload" style="padding:1rem">
+                  <strong>Ou envie uma foto</strong>
+                  <input type="file" accept="image/*" id="validate-photo">
+                </label>
+                <p class="hint" id="validate-error" role="alert" style="color:#B3261E;margin-top:.6rem"></p>
+                <button class="btn btn-lago" type="submit" style="margin-top:1rem;width:100%">Enviar para quem achou</button>
+              </form>
+            </div>
+
+            <!-- etapa B: chat + entrega -->
+            <div id="item-chat" hidden>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap">
+                <h2 style="font-size:1.4rem;margin:0">Chat anônimo</h2>
+                <span class="chip chip-menta" data-icon-inline="check">Dono confirmado</span>
+              </div>
+              <p class="hint" style="margin:.4rem 0 .8rem">Seu nome completo e telefone não aparecem aqui.</p>
+              <div class="chat" id="chat" aria-live="polite"></div>
+              <form class="chat-form" id="chat-form">
+                <label class="sr-only" for="chat-input">Mensagem</label>
+                <input type="text" id="chat-input" name="chat-input" autocomplete="off" placeholder="Escreva uma mensagem…">
+                <button class="btn btn-lago btn-small" type="submit">Enviar</button>
+              </form>
+
+              <h3 style="margin-top:2rem">Como você quer buscar?</h3>
+              <div class="choices choices-wide" id="delivery"></div>
+              <div class="panel" style="margin-top:1rem;background:var(--sol-soft);border-color:#F3E1A8" id="fee-box">
+                <p style="margin:0"><strong>Recompensa pedida por Marina:</strong> R$ 5,00</p>
+                <p class="hint" style="margin:.3rem 0 0">É opcional e vai direto para quem achou, como agradecimento.</p>
+              </div>
+              <button class="btn btn-sol" id="confirm-delivery" style="margin-top:1.2rem;width:100%">Confirmar devolução</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CONFIRMADO ================= -->
+      <section class="view" id="v-confirmado" aria-labelledby="t-ok">
+        <div class="narrow panel done-box">
+          <div class="done-icon" data-icon="check"></div>
+          <h1 id="t-ok" style="font-size:2rem">Tudo certo, seu item vai voltar!</h1>
+          <p class="lead" id="ok-text"></p>
+          <div class="code" id="ok-code" aria-label="Código de retirada">Q7·4K2</div>
+          <p class="muted small">Mostre esse código na hora de retirar. Ele também fica salvo em Meu perfil.</p>
+          <div style="display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1rem">
+            <a class="btn btn-lago" href="#mapa">Ver no mapa</a>
+            <a class="btn btn-quiet" href="#inicio">Voltar ao início</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ACHEI ================= -->
+      <section class="view" id="v-achei" aria-labelledby="t-achei">
+        <div class="narrow">
+          <a class="back" href="#inicio" data-icon-inline="seta">Voltar</a>
+          <h1 id="t-achei" style="font-size:2.2rem">Obrigado por ajudar!</h1>
+          <p class="lead">Conte o que você achou. Leva menos de dois minutos.</p>
+          <form id="found-form" novalidate>
+            <div class="field">
+              <span class="label">O que você achou?</span>
+              <div class="choices" id="found-cats"></div>
+            </div>
+            <div class="field">
+              <span class="label">Foto do item</span>
+              <label class="upload">
+                <span data-icon-inline="camera" style="width:32px;color:var(--lago)"></span>
+                <strong>Tirar ou escolher foto</strong>
+                <span class="hint">Mostre o item por fora. Não abra bolsas nem carteiras para a foto.</span>
+                <input type="file" accept="image/*" id="found-photo">
+              </label>
+              <div class="previews" id="found-previews"></div>
+            </div>
+            <div class="field">
+              <label for="found-desc">Descrição rápida</label>
+              <textarea id="found-desc" name="found-desc" autocomplete="off" placeholder="Ex.: mochila azul com adesivo de planeta…"></textarea>
+              <p class="hint">Não descreva tudo. Deixe detalhes de fora para o dono confirmar.</p>
+            </div>
+            <div class="row-2">
+              <div class="field">
+                <label for="found-where">Onde achou?</label>
+                <select id="found-where" name="found-where" autocomplete="off"></select>
+              </div>
+              <div class="field"><label for="found-date">Quando?</label><input type="date" id="found-date" name="found-date" autocomplete="off"></div>
+            </div>
+            <div class="field">
+              <span class="label">O que você vai fazer com ele?</span>
+              <div class="choices choices-wide" id="found-action"></div>
+            </div>
+            <div class="field" id="found-fee">
+              <label for="fee">Recompensa opcional</label>
+              <p class="hint">Se for deixar numa Estação, você pode pedir até R$ 10 pelo esforço.</p>
+              <div class="range-row">
+                <input type="range" id="fee" min="0" max="10" step="1" value="0">
+                <output for="fee" id="fee-out">R$ 0</output>
+              </div>
+            </div>
+            <p class="hint" id="found-error" role="alert" style="color:#B3261E"></p>
+            <div class="form-actions"><button class="btn btn-sol" type="submit" style="margin-left:auto">Publicar item achado</button></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= ACHEI OK ================= -->
+      <section class="view" id="v-achei-ok" aria-labelledby="t-achei-ok">
+        <div class="narrow panel done-box">
+          <div class="done-icon" data-icon="coracao"></div>
+          <h1 id="t-achei-ok" style="font-size:2rem">Seu item achado está no ar</h1>
+          <p class="lead">Já avisamos <strong>12 pessoas</strong> que procuram algo parecido.</p>
+          <div class="points"><b>+50</b><span>pontos quando a devolução acontecer</span></div>
+          <span class="seal" style="margin-top:1rem"><i data-icon="estrela"></i>Você está a 1 devolução do selo Primeira devolução</span>
+          <div style="display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem">
+            <a class="btn btn-lago" href="#perfil">Ver meu perfil</a>
+            <a class="btn btn-quiet" href="#inicio">Voltar ao início</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MAPA ================= -->
+      <section class="view" id="v-mapa" aria-labelledby="t-mapa">
+        <h1 id="t-mapa" style="font-size:2.2rem">Mapa da cidade</h1>
+        <p class="lead">Achados e perdidos de instituições, Estações quedi e perdas recentes perto de você.</p>
+        <div class="map-legend" id="map-filters"></div>
+        <div class="map-layout">
+          <div class="map-box" id="big-map"></div>
+          <div class="place-list" id="place-list"></div>
+        </div>
+      </section>
+
+      <!-- ================= PERFIL ================= -->
+      <section class="view" id="v-perfil" aria-labelledby="t-perfil">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="profile-top" style="display:flex;gap:1rem;align-items:center">
+              <div class="avatar" style="width:72px;height:72px;font-size:1.4rem">VC</div>
+              <div>
+                <h1 id="t-perfil" style="font-size:1.8rem;margin:0">Você</h1>
+                <span class="verified" data-icon-inline="escudo">Conta verificada</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:2rem;margin:1.5rem 0;flex-wrap:wrap">
+              <div><div class="points"><b>320</b><span>pontos</span></div></div>
+              <div><span class="rating">Nota 5,0</span><br><span class="muted small">em 3 devoluções</span></div>
+            </div>
+            <h2 style="font-size:1.2rem">Seus selos</h2>
+            <div class="seals">
+              <span class="seal"><i data-icon="estrela"></i>Primeira devolução</span>
+              <span class="seal"><i data-icon="coracao"></i>Coração bom</span>
+              <span class="seal" style="background:var(--bg);color:var(--ink-soft)"><i data-icon="cadeado" style="background:var(--line)"></i>Grande ajudante · faltam 2</span>
+            </div>
+            <div class="review">
+              <strong class="small">Avaliação de Ana, que recebeu os óculos de volta</strong>
+              <p class="muted">“Super atenciosa, deixou na Estação no mesmo dia.”</p>
+            </div>
+          </div>
+          <div>
+            <div class="panel">
+              <h2 style="font-size:1.3rem">Trocar pontos</h2>
+              <div class="choices choices-wide" id="redeem"></div>
+            </div>
+            <div class="panel" style="margin-top:1.5rem">
+              <h2 style="font-size:1.3rem">Meus itens</h2>
+              <div id="my-items"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <a class="brand" href="index.html" translate="no" data-logo><span class="brand-name">quedi minhas coisas</span></a>
+      <p class="muted small">Protótipo navegável. Nenhum dado é enviado ou guardado.</p>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
