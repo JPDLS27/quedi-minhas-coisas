@@ -45,6 +45,28 @@
     onceVisible(heroCount, () => countTo(heroCount, to, n => `${n} ${n === 1 ? 'pessoa' : 'pessoas'}`, 1.6));
   }
 
+  /* ---------- Devolução segura: acordeão + mini testes ---------- */
+  $$('.safe-btn').forEach(btn => btn.addEventListener('click', () => {
+    const item = btn.closest('.safe-item'), open = !item.classList.contains('is-open');
+    $$('.safe-item').forEach(it => { it.classList.remove('is-open'); $('.safe-btn', it).setAttribute('aria-expanded', 'false'); });
+    if (open) { item.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+  }));
+  $$('[data-ans]').forEach(b => b.addEventListener('click', () => {
+    const res = $('.safe-res', b.closest('.safe-demo'));
+    $$('[data-ans]').forEach(x => x.classList.remove('is-right', 'is-wrong'));
+    void b.offsetWidth;
+    const ok = b.dataset.ans === '1';
+    b.classList.add(ok ? 'is-right' : 'is-wrong');
+    res.className = 'safe-res ' + (ok ? 'is-ok' : 'is-bad');
+    res.textContent = ok ? 'Acertou! Dono confirmado, o item pode ser retirado.' : 'Não é esse. Quem não sabe o detalhe não leva o item.';
+  }));
+  $$('[data-meet]').forEach(b => b.addEventListener('click', () => {
+    const res = $('.safe-res', b.closest('.safe-demo'));
+    $$('[data-meet]').forEach(x => x.classList.toggle('is-right', x === b));
+    res.className = 'safe-res is-ok';
+    res.textContent = 'Combinado: ' + b.dataset.meet + '.';
+  }));
+
   /* ---------- FAQ com altura animada ---------- */
   if (!reduce) {
     $$('.faq details').forEach(d => {
@@ -201,10 +223,10 @@
     });
 
     const LM = [
-      { label: 'Praça da Matriz', x: 300, y: 232 },
-      { label: 'Rua das Flores', x: 395, y: 330 },
-      { label: 'Parque da Lagoa', x: 605, y: 232 },
-      { label: 'Ponto de ônibus da Rodoviária', x: 690, y: 350 }
+      { label: 'Praça Hercílio Luz', x: 300, y: 232 },
+      { label: 'Rua XV de Novembro', x: 395, y: 330 },
+      { label: 'Parque Ramiro Ruediger', x: 605, y: 232 },
+      { label: 'Terminal da Fonte', x: 690, y: 350 }
     ];
     const lm = $('#landmarks');
     lm.innerHTML = LM.map((l, i) => `<button type="button" class="map-filter" data-i="${i}" aria-pressed="false">${l.label}</button>`).join('');
@@ -235,13 +257,35 @@
       .from('.hero h1 .wi', { yPercent: 115, duration: .9, stagger: .08 }, .1)
       .from('.hero .lead', { y: 18, opacity: 0, duration: .7 }, .45)
       .from('.hero .tag', { y: -44, opacity: 0, duration: .9, stagger: .14, ease: 'back.out(1.3)', clearProps: 'transform,opacity' }, .65)
-      .fromTo('.hero-photo', { clipPath: 'inset(0 0 100% 0 round 28px)' }, { clipPath: 'inset(0 0 0% 0 round 28px)', duration: 1.2, ease: 'power3.inOut' }, .15)
-      .from('.hero-photo img', { scale: 1.25, duration: 1.6 }, .15)
-      .from('.hero .photo-tag', { y: 24, opacity: 0, duration: .7 }, 1.1)
-      .from('.hero .hope', { y: 20, opacity: 0, duration: .7 }, 1.2);
+      .from('.hero .ha-sun', { scale: .6, opacity: 0, svgOrigin: '300 300', duration: 1 }, .1)
+      .from('.hero .ha-body', { y: 60, opacity: 0, duration: .9 }, .3)
+      .from('.hero .ha-lens', { rotate: -25, x: -60, opacity: 0, svgOrigin: '170 372', duration: 1, ease: 'back.out(1.4)' }, .6)
+      .from('.hero .ha-bit', { scale: 0.4, opacity: 0, transformOrigin: '50% 50%', duration: .5, stagger: .06, ease: 'back.out(2)' }, .8)
+        .from('.hero .ha-eye-r', { x: 12, y: -2, duration: .5, ease: 'power2.inOut' }, 1.0)
+        .from('.hero .ha-eye-l', { x: -25, y: 4, duration: .5, ease: 'power2.inOut' }, 1.0)
+        .from('.hero .ha-mouth', { x: -18, duration: .5, ease: 'power2.inOut' }, 1.0)
+        .from('.hero .ha-cheek', { x: -20, duration: .5, ease: 'power2.inOut' }, 1.0)
+        .from('.hero .ha-head', { rotate: -4, svgOrigin: '300 300', duration: .5, ease: 'power2.inOut' }, 1.0);
 
     /* foto do hero se afasta devagar quando a página desce */
-    gsap.to('.hero-photo img', { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.to('.hero .ha-bits', { yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    /* a lupa "procura" devagar, para sempre (só sem reduzir movimento) */
+    gsap.to('.ha-lens', { rotate: -3, x: -5, y: -3, svgOrigin: '170 372', duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 2 });
+    gsap.to('.ha-eye', { x: 6, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 2.4 });
+
+    /* personagem do final entra quando a seção aparece */
+    if ($('.final-art')) {
+      gsap.timeline({ defaults: { ease: EASE }, scrollTrigger: { trigger: '.final-art', start: 'top 80%', once: true } })
+        .from('.final .ha-sun', { scale: .6, opacity: 0, svgOrigin: '300 300', duration: 1 }, 0)
+        .from('.final .ha-body', { y: 60, opacity: 0, duration: .9 }, .2)
+        .from('.final .ha-lens', { rotate: -25, x: -60, opacity: 0, svgOrigin: '170 372', duration: 1, ease: 'back.out(1.4)' }, .45)
+        .from('.final .ha-bit', { scale: .4, opacity: 0, transformOrigin: '50% 50%', duration: .5, stagger: .05, ease: 'back.out(2)' }, .6)
+        .from('.final .ha-eye-r', { x: 12, y: -2, duration: .5, ease: 'power2.inOut' }, .8)
+        .from('.final .ha-eye-l', { x: -25, y: 4, duration: .5, ease: 'power2.inOut' }, .8)
+        .from('.final .ha-mouth', { x: -18, duration: .5, ease: 'power2.inOut' }, .8)
+        .from('.final .ha-cheek', { x: -20, duration: .5, ease: 'power2.inOut' }, .8)
+        .from('.final .ha-head', { rotate: -4, svgOrigin: '300 300', duration: .5, ease: 'power2.inOut' }, .8);
+    }
 
     /* blocos que entram uma vez, em lote */
     const reveals = $$('[data-reveal]');

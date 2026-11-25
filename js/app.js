@@ -11,10 +11,13 @@ const CATS = [
   { id: 'carteira', label: 'Carteira' },
   { id: 'chaves', label: 'Chaves' },
   { id: 'documentos', label: 'Documentos' },
-  { id: 'mochila', label: 'Mochila ou bolsa' },
+  { id: 'mochila', label: 'Mochila' },
+  { id: 'bolsa', label: 'Bolsa' },
   { id: 'fone', label: 'Fone' },
   { id: 'oculos', label: 'Óculos' },
   { id: 'guardachuva', label: 'Guarda-chuva' },
+  { id: 'roupa', label: 'Roupa' },
+  { id: 'acessorio', label: 'Acessório' },
   { id: 'outro', label: 'Outro' }
 ];
 
@@ -22,12 +25,19 @@ const COLORS = [
   { id: 'preto', label: 'Preto', hex: '#222' },
   { id: 'branco', label: 'Branco', hex: '#fff' },
   { id: 'cinza', label: 'Cinza', hex: '#9AA3AE' },
-  { id: 'azul', label: 'Azul', hex: '#2F6DB5' },
-  { id: 'verde', label: 'Verde', hex: '#3E8E5E' },
+  { id: 'prata', label: 'Prata', hex: '#C9CDD2' },
+  { id: 'dourado', label: 'Dourado', hex: '#C9A227' },
+  { id: 'bege', label: 'Bege', hex: '#E3CDA4' },
+  { id: 'marrom', label: 'Marrom', hex: '#8A5A3B' },
   { id: 'vermelho', label: 'Vermelho', hex: '#C8413B' },
-  { id: 'amarelo', label: 'Amarelo', hex: '#F2C14E' },
+  { id: 'laranja', label: 'Laranja', hex: '#EE7D2B' },
+  { id: 'amarelo', label: 'Amarelo', hex: '#F2C94C' },
+  { id: 'verde', label: 'Verde', hex: '#3E8E5E' },
+  { id: 'azul', label: 'Azul', hex: '#2F6DB5' },
+  { id: 'roxo', label: 'Roxo', hex: '#7B4FB0' },
   { id: 'rosa', label: 'Rosa', hex: '#E79AB7' },
-  { id: 'marrom', label: 'Marrom', hex: '#8A5A3B' }
+  { id: 'transparente', label: 'Transparente', hex: 'transparent' },
+  { id: 'estampado', label: 'Colorido ou estampado', hex: 'conic-gradient(#C8413B 0 25%, #F2C94C 0 50%, #3E8E5E 0 75%, #2F6DB5 0)' }
 ];
 const colorHex = id => (COLORS.find(c => c.id === id) || {}).hex || '#ccc';
 
@@ -35,17 +45,19 @@ const INSTS = PLACES.filter(p => p.type === 'inst');
 
 /* Itens cadastrados por quem achou (dados de exemplo) */
 const FOUND = [
-  { id: 'f1', cat: 'mochila', color: 'azul', title: 'Mochila azul-marinho', place: 'bibl', when: 'Ontem, 16h', desc: 'mochila azul adesivo planeta bolso lateral', finder: true },
+  { id: 'f1', cat: 'mochila', color: 'azul', title: 'Mochila azul-marinho com detalhes em couro', place: 'bibl', when: 'Ontem, 16h', desc: 'mochila azul marinho couro marrom alça bolso frontal', finder: true, photo: 'mochila-biblioteca', alt: 'Mochila azul-marinho com alça e detalhes em couro marrom, segurada numa sala de leitura da Biblioteca Fritz Müller' },
   { id: 'f2', cat: 'mochila', color: 'azul', title: 'Mochila azul com chaveiro', place: 'rodo', when: 'Há 2 dias', desc: 'mochila azul chaveiro zíper' },
-  { id: 'f3', cat: 'mochila', color: 'preto', title: 'Bolsa de notebook preta', place: 'univ', when: 'Há 3 dias', desc: 'bolsa notebook preta alça' },
+  { id: 'f3', cat: 'bolsa', color: 'preto', title: 'Bolsa de notebook preta', place: 'univ', when: 'Há 3 dias', desc: 'bolsa notebook preta alça' },
   { id: 'f4', cat: 'celular', color: 'branco', title: 'Celular branco com capinha transparente', place: 'shop', when: 'Hoje, 11h', desc: 'celular branco capinha transparente iphone', photo: 'celular-shopping', alt: 'Celular branco com capinha transparente, segurado num corredor de shopping' },
   { id: 'f5', cat: 'celular', color: 'azul', title: 'Celular azul com tela trincada', place: 'rodo', when: 'Ontem, 20h', desc: 'celular azul tela trincada' },
   { id: 'f6', cat: 'carteira', color: 'marrom', title: 'Carteira de couro marrom', place: 'univ', when: 'Hoje, 9h', desc: 'carteira couro marrom costura', photo: 'carteira-furb', alt: 'Carteira de couro marrom segurada no saguão da FURB' },
-  { id: 'f7', cat: 'chaves', color: 'cinza', title: 'Molho com 3 chaves e chaveiro de gato', place: 'shop', when: 'Ontem, 18h', desc: 'chaves chaveiro gato' },
-  { id: 'f8', cat: 'fone', color: 'branco', title: 'Fone sem fio branco no estojo', place: 'bibl', when: 'Hoje, 14h', desc: 'fone sem fio branco estojo airpods', photo: 'fone-biblioteca', alt: 'Estojo de fone sem fio branco, aberto, segurado na Biblioteca Municipal' },
-  { id: 'f9', cat: 'oculos', color: 'preto', title: 'Óculos de grau com armação preta', place: 'univ', when: 'Há 4 dias', desc: 'óculos grau armação preta estojo' },
+  { id: 'f7', cat: 'chaves', color: 'cinza', title: 'Molho com 3 chaves e chaveiro de gato', place: 'shop', when: 'Ontem, 18h', desc: 'chaves chaveiro gato pelúcia branco', photo: 'chaves-shopping', alt: 'Molho de chaves com chaveiro de gatinho branco de pelúcia, segurado num corredor do Shopping Neumarkt' },
+  { id: 'f8', cat: 'fone', color: 'branco', title: 'Fone sem fio branco no estojo', place: 'bibl', when: 'Hoje, 14h', desc: 'fone sem fio branco estojo airpods', photo: 'fone-biblioteca', alt: 'Estojo de fone sem fio branco, aberto, segurado na Biblioteca Fritz Müller' },
+  { id: 'f9', cat: 'oculos', color: 'cinza', title: 'Óculos de grau com armação de metal', place: 'univ', when: 'Há 4 dias', desc: 'óculos grau armação metal fina cinza', photo: 'oculos-furb', alt: 'Óculos de grau de armação fina de metal, segurados no saguão da FURB' },
   { id: 'f10', cat: 'documentos', color: 'azul', title: 'Documento em capa azul', place: 'rodo', when: 'Há 2 dias', desc: 'documento rg capa azul' },
-  { id: 'f11', cat: 'guardachuva', color: 'verde', title: 'Guarda-chuva verde', place: 'shop', when: 'Há 3 dias', desc: 'guarda-chuva verde' }
+  { id: 'f11', cat: 'guardachuva', color: 'verde', title: 'Guarda-chuva verde com cabo preto', place: 'rodo', when: 'Há 2 dias', desc: 'guarda-chuva verde cabo preto curvo', photo: 'guardachuva-rodoviaria', alt: 'Guarda-chuva verde-escuro fechado, com cabo preto curvo, segurado na Rodoviária' },
+  { id: 'f12', cat: 'carteira', color: 'preto', title: 'Carteira preta com zíper', place: 'rodo', when: 'Há 2 dias', desc: 'carteira porta-cartões preta zíper couro', photo: 'carteira-rodoviaria', alt: 'Porta-cartões de couro preto com zíper, segurado no saguão da Rodoviária' },
+  { id: 'f13', cat: 'carteira', color: 'marrom', title: 'Porta-cartões de couro marrom', place: 'shop', when: 'Há 3 dias', desc: 'porta-cartões carteira couro marrom', photo: 'portacartoes-neumarkt', alt: 'Porta-cartões de couro marrom, segurado em frente a uma loja do Shopping Neumarkt' }
 ];
 const placeName = id => (PLACES.find(p => p.id === id) || {}).name || 'Outro lugar';
 
@@ -84,6 +96,19 @@ function catChoices(container, name) {
       <input type="radio" name="${name}" id="${name}-${c.id}" value="${c.id}">
       <label for="${name}-${c.id}">${icon(c.id)}${c.label}</label>
     </div>`).join('');
+  // "Outro": mostra o campo para a pessoa dizer que tipo de item é
+  const box = document.getElementById(name + '-other-box');
+  $$(`input[name="${name}"]`, container).forEach(r => r.addEventListener('change', () => {
+    box.hidden = r.value !== 'outro';
+    if (!box.hidden) box.querySelector('input').focus();
+  }));
+  box.querySelector('input').addEventListener('input', () => { const e = document.getElementById(name === 'lostcat' ? 'lost-error' : 'found-error'); if (e) e.textContent = ''; });
+}
+function catLabel(name) {
+  const cat = ($(`input[name="${name}"]:checked`) || {}).value;
+  if (!cat) return '';
+  if (cat === 'outro') return $(`#${name}-other`).value.trim();
+  return CATS.find(c => c.id === cat).label;
 }
 function wideChoices(container, name, opts, checked) {
   container.innerHTML = opts.map(o => `
@@ -121,10 +146,22 @@ function itemCard(it, pct) {
 }
 
 /* ---------- roteamento por #hash ---------- */
-const VIEWS = ['inicio', 'perdi', 'resultados', 'item', 'confirmado', 'achei', 'achei-ok', 'mapa', 'perfil'];
+const VIEWS = ['inicio', 'perdi', 'resultados', 'item', 'confirmado', 'achei', 'achei-ok', 'mapa', 'perfil', 'entrar'];
+/* Conta fictícia: guardada só neste navegador */
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* sem armazenamento: segue só na memória */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* idem */ } }
+};
+state.user = store.get('quedi-user');
 function route() {
   let name = location.hash.slice(1);
   if (!VIEWS.includes(name)) name = 'inicio';
+  if (name !== 'entrar' && !state.user) {
+    state.next = name;
+    history.replaceState(null, '', '#entrar');
+    name = 'entrar';
+  }
   $$('.view').forEach(v => v.classList.toggle('is-active', v.id === 'v-' + name));
   $$('[data-nav]').forEach(a => {
     if (a.dataset.nav === name) a.setAttribute('aria-current', 'page');
@@ -144,7 +181,14 @@ document.addEventListener('click', e => {
 const ON_ENTER = {
   inicio() {
     $('#home-map').innerHTML = cityMap({ show: ['inst', 'estacao', 'perda'], aria: 'Mapa da cidade com achados e perdidos de instituições e Estações quedi' });
-    $('#recent').innerHTML = [FOUND[3], FOUND[5], FOUND[7]].map(it => itemCard(it)).join('');
+    mapLife($('#home-map'), { seed: 3, walkers: 30, me: { x: 395, y: 290, r: 120 } });
+    $('#home-legend').innerHTML = [
+      ['inst', 'Achados e perdidos de instituições'],
+      ['estacao', 'Estação quedi para deixar ou retirar itens'],
+      ['perda', 'Alguém perdeu algo por aqui']
+    ].map(([t, txt]) => `<li><span class="lg-pin" style="background:${PIN_STYLE[t].fill};color:${PIN_STYLE[t].icoColor};box-shadow:0 0 0 2px ${PIN_STYLE[t].stroke === '#fff' ? '#fff' : PIN_STYLE[t].stroke}">${icon(PIN_STYLE[t].ico)}</span>${txt}</li>`).join('')
+      + '<li><span class="lg-walker"></span>Pessoas passando agora</li><li class="lg-tip">Toque num ponto para ver o nome do lugar.</li>';
+    $('#recent').innerHTML = ['f1', 'f11', 'f9', 'f7', 'f4', 'f12'].map(id => FOUND.find(f => f.id === id)).map(it => itemCard(it)).join('');
   },
   perdi() { showLostStep(state.lostStep); },
   resultados() { renderResults(); },
@@ -158,9 +202,8 @@ const ON_ENTER = {
    ============================================================ */
 catChoices($('#lost-cats'), 'lostcat');
 $('#lost-colors').innerHTML = COLORS.map(c => `
-  <span class="swatch"><input type="radio" name="lostcolor" id="lc-${c.id}" value="${c.id}">
-  <label for="lc-${c.id}"><i style="background:${c.hex}"></i>${c.label}</label></span>`).join('');
-$('#lost-inst').innerHTML = INSTS.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  <span class="swatch"><input type="checkbox" name="lostcolor" id="lc-${c.id}" value="${c.id}">
+  <label for="lc-${c.id}"><i class="${c.id === 'transparente' ? 'is-clear' : ''}" style="background:${c.hex}"></i>${c.label}</label></span>`).join('');
 $('#lost-date').value = todayISO();
 previewFiles($('#lost-photos'), $('#lost-previews'));
 
@@ -173,40 +216,81 @@ function showLostStep(n) {
   $('#lost-next').textContent = n === 4 ? 'Ver itens parecidos' : 'Continuar';
   $('#lost-error').textContent = '';
 }
-function renderPickMap() {
-  $('#lost-map').innerHTML = cityMap({ show: ['inst'], pick: state.pick, radius: !!state.pick, aria: 'Mapa: toque para marcar onde perdeu' });
-  $('#lost-map svg').addEventListener('click', e => {
-    const svg = e.currentTarget;
-    const pt = svg.createSVGPoint();
-    pt.x = e.clientX; pt.y = e.clientY;
-    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
-    setPick({ x: Math.round(p.x), y: Math.round(p.y) });
+/* Busca de local + mapa, no estilo de marcar localização numa rede social.
+   Usado em "Perdi algo" e em "Achei algo". */
+const LOCS = [
+  ...PLACES.filter(p => p.type !== 'perda').map(p => ({ name: p.name, sub: p.type === 'inst' ? 'Tem achados e perdidos' : 'Estação quedi', x: p.x, y: p.y, inst: p.type === 'inst' ? p.id : null, ico: PIN_STYLE[p.type].ico })),
+  { name: 'Praça Hercílio Luz', sub: 'Centro', x: 300, y: 230 },
+  { name: 'Rua XV de Novembro', sub: 'Centro', x: 455, y: 290 },
+  { name: 'Parque Ramiro Ruediger', sub: 'Parque', x: 605, y: 230 },
+  { name: 'Rua 7 de Setembro', sub: 'Centro', x: 150, y: 62 },
+  { name: 'Terminal da Fonte', sub: 'Ônibus urbano, Centro', x: 690, y: 345 },
+  { name: 'Teatro Carlos Gomes', sub: 'Centro', x: 225, y: 290 },
+  { name: 'Hospital Santa Isabel', sub: 'Centro', x: 520, y: 400 },
+  { name: 'Rua São Paulo', sub: 'Itoupava Seca', x: 150, y: 440 },
+  { name: 'Itoupava Seca', sub: 'Bairro', x: 170, y: 470 },
+  { name: 'Ponte de Ferro', sub: 'Centro', x: 395, y: 470 },
+  { name: 'Prainha', sub: 'Beira-rio, Centro', x: 470, y: 488 }
+].map(l => ({ ico: 'pin', ...l }));
+const norm = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function locPicker({ input, list, map, msg, error, verb, onPick }) {
+  const pick = { pt: null, place: null };
+  let matches = [], active = -1;
+  function renderMap() {
+    map.innerHTML = cityMap({ show: ['inst'], pick: pick.pt, radius: !!pick.pt, aria: `Mapa: toque para marcar onde ${verb}` });
+    map.querySelector('svg').addEventListener('click', e => {
+      const svg = e.currentTarget, pt = svg.createSVGPoint();
+      pt.x = e.clientX; pt.y = e.clientY;
+      const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+      input.value = 'Ponto marcado no mapa';
+      set({ x: Math.round(p.x), y: Math.round(p.y) });
+    });
+    mapLife(map, {
+      pick: pick.pt,
+      onPin: p => { const l = LOCS.find(x => x.name === p.name); if (l) { input.value = l.name; set({ x: l.x, y: l.y }, l); } },
+      onCount: n => { if (pick.pt) msg.innerHTML = `${pick.place ? pick.place.name + ' marcado.' : 'Ponto marcado.'} <strong>${n} ${n === 1 ? 'pessoa passando' : 'pessoas passando'}</strong> por perto agora ${n === 1 ? 'vai' : 'vão'} receber o aviso.`; }
+    });
+  }
+  function set(pt, place) {
+    pick.pt = pt; pick.place = place || null;
+    msg.textContent = place ? `${place.name} marcado no mapa.` : 'Ponto marcado no mapa.';
+    renderMap();
+    if (error) error.textContent = '';
+    if (onPick) onPick(pick);
+  }
+  function render() {
+    const q = norm(input.value.trim());
+    matches = q ? LOCS.filter(l => norm(l.name + ' ' + l.sub).includes(q)) : LOCS.filter(l => l.inst);
+    active = -1;
+    list.innerHTML = matches.length
+      ? matches.map((l, i) => `<li role="option" id="${list.id}-${i}" data-i="${i}" aria-selected="false"><span class="loc-ic">${icon(l.ico)}</span><span><strong>${l.name}</strong><small>${l.sub}</small></span></li>`).join('')
+      : '<li class="loc-empty">Nenhum lugar com esse nome. Toque no mapa para marcar o ponto.</li>';
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+  function close() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); }
+  function choose(i) { const l = matches[i]; input.value = l.name; close(); set({ x: l.x, y: l.y }, l); }
+  input.addEventListener('focus', render);
+  input.addEventListener('input', () => { pick.place = null; render(); });
+  input.addEventListener('keydown', e => {
+    if (list.hidden && e.key === 'ArrowDown') render();
+    const n = matches.length;
+    if (e.key === 'ArrowDown' && n) { e.preventDefault(); active = (active + 1) % n; }
+    else if (e.key === 'ArrowUp' && n) { e.preventDefault(); active = (active - 1 + n) % n; }
+    else if (e.key === 'Enter') { if (active >= 0 && !list.hidden) { e.preventDefault(); choose(active); } return; }
+    else if (e.key === 'Escape') { close(); return; }
+    else return;
+    $$('[role="option"]', list).forEach((o, i) => o.setAttribute('aria-selected', String(i === active)));
+    input.setAttribute('aria-activedescendant', `${list.id}-${active}`);
+    $(`#${list.id}-${active}`).scrollIntoView({ block: 'nearest' });
   });
+  list.addEventListener('mousedown', e => { const li = e.target.closest('[data-i]'); if (li) { e.preventDefault(); choose(+li.dataset.i); } });
+  input.addEventListener('blur', () => setTimeout(close, 120));
+  renderMap();
+  return pick;
 }
-function setPick(pt) {
-  state.pick = pt;
-  renderPickMap();
-  $('#lost-map-msg').textContent = 'Ponto marcado. Vamos avisar quem passou por esse círculo no dia e hora que você informar.';
-}
-const LANDMARKS = [
-  { label: 'Praça da Matriz', x: 300, y: 230 },
-  { label: 'Rua das Flores', x: 455, y: 290 },
-  { label: 'Parque da Lagoa', x: 605, y: 230 },
-  { label: 'Av. Brasil', x: 150, y: 62 },
-  { label: 'Ponto de ônibus da Rodoviária', x: 690, y: 345 }
-];
-$('#landmarks').innerHTML = LANDMARKS.map((l, i) => `<button type="button" class="map-filter" data-lm="${i}" aria-pressed="false">${l.label}</button>`).join('');
-$$('[data-lm]').forEach(b => b.addEventListener('click', () => {
-  $$('[data-lm]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  const l = LANDMARKS[+b.dataset.lm];
-  setPick({ x: l.x, y: l.y });
-}));
-$$('input[name="where"]').forEach(r => r.addEventListener('change', () => {
-  const map = $('#where-map').checked;
-  $('#where-inst-box').hidden = map;
-  $('#where-map-box').hidden = !map;
-  if (map) renderPickMap();
-}));
+const lostPick = locPicker({ input: $('#lost-loc'), list: $('#loc-list'), map: $('#lost-map'), msg: $('#lost-map-msg'), error: $('#lost-error'), verb: 'perdeu' });
+
 
 $('#lost-prev').addEventListener('click', () => showLostStep(state.lostStep - 1));
 $('#lost-form').addEventListener('submit', e => {
@@ -214,7 +298,8 @@ $('#lost-form').addEventListener('submit', e => {
   const n = state.lostStep;
   const err = $('#lost-error');
   if (n === 1 && !$('input[name="lostcat"]:checked')) { err.textContent = 'Escolha o tipo de item para continuar.'; $('#lostcat-celular').focus(); return; }
-  if (n === 3 && $('#where-map').checked && !state.pick) { err.textContent = 'Toque no mapa ou escolha um ponto de referência para marcar onde você perdeu.'; $('[data-lm]').focus(); return; }
+  if (n === 1 && !catLabel('lostcat')) { err.textContent = 'Escreva que tipo de item você perdeu.'; $('#lostcat-other').focus(); return; }
+  if (n === 3 && !lostPick.pt) { err.textContent = 'Pesquise o local ou toque no mapa para marcar onde você perdeu.'; $('#lost-loc').focus(); return; }
   if (n === 3 && $('#lost-from').value && $('#lost-to').value && $('#lost-to').value <= $('#lost-from').value) {
     err.textContent = 'O horário final precisa ser depois do inicial. Ajuste o período em que você perdeu.'; $('#lost-to').focus(); return;
   }
@@ -223,10 +308,12 @@ $('#lost-form').addEventListener('submit', e => {
   const cat = $('input[name="lostcat"]:checked').value;
   state.lost = {
     cat,
-    name: $('#lost-name').value.trim() || CATS.find(c => c.id === cat).label,
-    color: ($('input[name="lostcolor"]:checked') || {}).value || null,
-    text: [$('#lost-name').value, $('#lost-brand').value, $('#lost-model').value, $('#lost-marks').value].join(' ').toLowerCase(),
-    place: $('#where-map').checked ? null : $('#lost-inst').value,
+    name: catLabel('lostcat'),
+    colors: $$('input[name="lostcolor"]:checked').map(i => i.value),
+    text: [catLabel('lostcat'), $('#lost-brand').value, $('#lost-model').value, $('#lost-marks').value].join(' ').toLowerCase(),
+    place: lostPick.place && lostPick.place.inst || null,
+    placeName: lostPick.place ? lostPick.place.name : null,
+    ref: $('#lost-ref').value.trim(),
     secret: $('#lost-secret').value.trim(),
     when: `${$('#lost-from').value}–${$('#lost-to').value}`
   };
@@ -237,8 +324,9 @@ $('#lost-form').addEventListener('submit', e => {
 function score(it, lost) {
   let s = 0;
   if (it.cat === lost.cat) s += 55;
-  if (lost.color && it.color === lost.color) s += 25;
-  else if (!lost.color) s += 10;
+  const cols = lost.colors || [];
+  if (cols.includes(it.color)) s += 25;
+  else if (!cols.length) s += 10;
   const words = lost.text.split(/\W+/).filter(w => w.length > 3);
   const hits = words.filter(w => it.desc.includes(w)).length;
   s += Math.min(hits * 6, 12);
@@ -246,12 +334,12 @@ function score(it, lost) {
   return Math.min(s, 97);
 }
 function renderResults() {
-  const lost = state.lost || { cat: 'mochila', color: 'azul', text: 'mochila azul', place: 'bibl', name: 'Mochila azul' };
+  const lost = state.lost || { cat: 'mochila', colors: ['azul'], text: 'mochila azul', place: 'bibl', name: 'Mochila azul' };
   const ranked = FOUND.map(it => ({ it, pct: score(it, lost) }))
     .filter(r => r.pct >= 30)
     .sort((a, b) => b.pct - a.pct)
     .slice(0, 4);
-  const where = lost.place ? INSTS.find(p => p.id === lost.place).near : 'do ponto que você marcou';
+  const where = lost.place ? INSTS.find(p => p.id === lost.place).near : lost.placeName ? `de ${lost.placeName}` : 'do ponto que você marcou';
   countUp($('#res-hope'), 30, n => `Seu item já foi mostrado para <strong>${n} ${n === 1 ? 'pessoa' : 'pessoas'}</strong> que passaram perto ${where}.`);
   if (ranked.length) {
     $('#t-res').textContent = `Achamos ${ranked.length} ${ranked.length === 1 ? 'item parecido' : 'itens parecidos'} com o seu`;
@@ -284,7 +372,7 @@ function renderItem() {
   wideChoices($('#delivery'), 'deliv', [
     { id: 'estacao', icon: 'estacao', title: 'Buscar na Estação quedi Centro', sub: 'Marina deixa lá e você retira com um código, sem encontro' },
     ...(isInst ? [{ id: 'inst', icon: 'predio', title: `Retirar em ${placeName(it.place)}`, sub: 'No balcão de achados e perdidos, em horário de atendimento' }] : []),
-    { id: 'encontro', icon: 'mao', title: 'Encontrar em um lugar público', sub: 'Sugestão: Praça da Matriz, em horário comercial' }
+    { id: 'encontro', icon: 'mao', title: 'Encontrar em um lugar público', sub: 'Sugestão: Praça Hercílio Luz, em horário comercial' }
   ], 'estacao');
   state.delivery = 'estacao';
   $('#fee-box').hidden = false;
@@ -335,7 +423,7 @@ $('#confirm-delivery').addEventListener('click', () => {
   const it = state.item;
   const code = 'Q' + Math.floor(Math.random() * 9 + 1) + '·' + Math.random().toString(36).slice(2, 5).toUpperCase();
   const texts = {
-    estacao: 'Marina vai deixar o item na Estação quedi Centro (Rua das Flores, 120). Você recebe um aviso quando ele chegar.',
+    estacao: 'Marina vai deixar o item na Estação quedi Centro (Rua XV de Novembro). Você recebe um aviso quando ele chegar.',
     inst: `O item vai estar no balcão de achados e perdidos de ${placeName(it.place)}.`,
     encontro: 'Combine o horário pelo chat. Lembre: lugar movimentado e horário comercial.'
   };
@@ -349,7 +437,7 @@ $('#confirm-delivery').addEventListener('click', () => {
    ACHEI ALGO
    ============================================================ */
 catChoices($('#found-cats'), 'foundcat');
-$('#found-where').innerHTML = INSTS.map(p => `<option value="${p.id}">${p.name}</option>`).join('') + '<option value="outro">Outro lugar (rua, praça, ônibus…)</option>';
+const foundPick = locPicker({ input: $('#found-loc'), list: $('#found-loc-list'), map: $('#found-map'), msg: $('#found-map-msg'), error: $('#found-error'), verb: 'achou' });
 $('#found-date').value = todayISO();
 previewFiles($('#found-photo'), $('#found-previews'));
 wideChoices($('#found-action'), 'faction', [
@@ -363,9 +451,11 @@ $('#fee').addEventListener('input', e => { $('#fee-out').textContent = 'R$ ' + e
 $('#found-form').addEventListener('submit', e => {
   e.preventDefault();
   if (!$('input[name="foundcat"]:checked')) { $('#found-error').textContent = 'Escolha o tipo de item que você achou.'; $('#foundcat-celular').focus(); return; }
+  if (!catLabel('foundcat')) { $('#found-error').textContent = 'Escreva que tipo de item você achou.'; $('#foundcat-other').focus(); return; }
+  if (!foundPick.pt) { $('#found-error').textContent = 'Pesquise o local ou toque no mapa para marcar onde você achou.'; $('#found-loc').focus(); return; }
   $('#found-error').textContent = '';
   const cat = $('input[name="foundcat"]:checked').value;
-  state.myFound = { cat, title: $('#found-desc').value.trim() || CATS.find(c => c.id === cat).label };
+  state.myFound = { cat, title: catLabel('foundcat') };
   location.hash = 'achei-ok';
 });
 
@@ -382,6 +472,7 @@ $$('.map-filter').forEach(b => b.addEventListener('click', () => {
 }));
 function renderMap() {
   $('#big-map').innerHTML = cityMap({ show: state.mapShow, labels: true, focusPins: true });
+  mapLife($('#big-map'), { seed: 5, walkers: 30, me: { x: 395, y: 290, r: 120 } });
   const list = PLACES.filter(p => state.mapShow.includes(p.type));
   $('#place-list').innerHTML = list.length ? list.map(p => `
     <div class="place" id="pl-${p.id}" tabindex="-1">
@@ -405,34 +496,102 @@ function renderMap() {
    PERFIL
    ============================================================ */
 function renderProfile() {
+  const pts = 320;
   const rewards = [
-    { icon: 'cafe', title: 'Café na cantina parceira', pts: 100 },
-    { icon: 'moeda', title: 'R$ 10 via Pix', pts: 200 },
-    { icon: 'presente', title: 'Vale-presente de R$ 15', pts: 300 }
+    { icon: 'cafe', title: 'Café na cantina parceira', pts: 100, tone: 'r1' },
+    { icon: 'moeda', title: 'R$ 10 via Pix', pts: 200, tone: 'r2' },
+    { icon: 'presente', title: 'Vale-presente de R$ 15', pts: 300, tone: 'r3' },
+    { icon: 'presente', title: 'Vale-presente de R$ 30', pts: 600, tone: 'r4' }
   ];
-  $('#redeem').innerHTML = rewards.map(r => `
-    <div class="redeem-row">
+  $('#redeem').innerHTML = rewards.map(r => {
+    const ok = pts >= r.pts;
+    return `<div class="redeem-row ${r.tone}">
       <span class="ico">${icon(r.icon)}</span>
-      <div><strong>${r.title}</strong><br><span class="muted small">${r.pts} pontos</span></div>
-      <button class="btn btn-quiet btn-small" type="button" data-redeem="${r.title}">Trocar</button>
-    </div>`).join('');
+      <div><strong>${r.title}</strong><span class="small">${r.pts} pontos</span>
+        <div class="pf-bar" aria-hidden="true"><span style="width:${Math.min(100, pts / r.pts * 100)}%"></span></div></div>
+      <button class="btn ${ok ? 'btn-lago' : 'btn-quiet'} btn-small" type="button" data-redeem="${r.title}" ${ok ? '' : 'disabled'}>${ok ? 'Trocar' : `Faltam ${r.pts - pts}`}</button>
+    </div>`;
+  }).join('');
   $$('[data-redeem]').forEach(b => b.addEventListener('click', () => toast(`Troca simulada: ${b.dataset.redeem}.`)));
 
-  const rows = [];
-  if (state.lost) rows.push({ cat: state.lost.cat, title: state.lost.name, status: state.returnCode ? `Devolução combinada · código ${state.returnCode}` : `Perdido entre ${state.lost.when.replace('–', ' e ')} · mostrado para 30 pessoas`, chip: state.returnCode ? 'chip-menta' : 'chip' , label: state.returnCode ? 'A caminho' : 'Perdido' });
-  if (state.myFound) rows.push({ cat: state.myFound.cat, title: state.myFound.title, status: '12 pessoas avisadas', chip: 'chip-sol', label: 'Achado' });
-  rows.push({ cat: 'oculos', title: 'Óculos de sol', status: 'Devolvido para Ana em outubro', chip: 'chip-menta', label: 'Devolvido' });
-  $('#my-items').innerHTML = rows.map(r => `
+  const pic = (id, cat) => { const f = FOUND.find(x => x.id === id); return f && f.photo ? `<img src="assets/img/${f.photo}-sq.jpg" width="360" height="360" alt="">` : icon(cat); };
+  const row = r => `
     <div class="my-item">
-      <div class="thumb">${icon(r.cat)}</div>
-      <div><strong>${r.title}</strong><br><span class="muted small">${r.status}</span></div>
+      <div class="thumb">${r.pic}</div>
+      <div><strong>${r.title}</strong><span class="small">${r.status}</span></div>
       <span class="chip ${r.chip}">${r.label}</span>
-    </div>`).join('');
+    </div>`;
+  const lost = [];
+  if (state.lost) lost.push({ pic: icon(state.lost.cat), title: state.lost.name, status: state.returnCode ? `Devolução combinada · código ${state.returnCode}` : `Perdido entre ${state.lost.when.replace('–', ' e ')} · mostrado para 30 pessoas`, chip: state.returnCode ? 'chip-menta' : 'chip-lago', label: state.returnCode ? 'A caminho' : 'Procurando' });
+  lost.push({ pic: icon('fone'), title: 'Fone sem fio preto', status: 'Perdido no Terminal da Fonte · 2 itens parecidos', chip: 'chip-lago', label: 'Procurando' });
+  lost.push({ pic: icon('documentos'), title: 'Carteirinha da FURB', status: 'Recebida de volta em setembro', chip: 'chip-menta', label: 'Recuperado' });
+  const found = [];
+  if (state.myFound) found.push({ pic: icon(state.myFound.cat), title: state.myFound.title, status: '12 pessoas avisadas', chip: 'chip-sol', label: 'Esperando dono' });
+  found.push({ pic: pic('f11', 'guardachuva'), title: 'Guarda-chuva verde', status: 'Deixado na Estação quedi Centro', chip: 'chip-sol', label: 'Esperando dono' });
+  found.push({ pic: pic('f9', 'oculos'), title: 'Óculos de grau', status: 'Devolvido para Ana em outubro · +100 pontos', chip: 'chip-menta', label: 'Devolvido' });
+  found.push({ pic: pic('f13', 'carteira'), title: 'Porta-cartões marrom', status: 'Devolvido para Bruna · +100 pontos', chip: 'chip-menta', label: 'Devolvido' });
+  $('#my-lost').innerHTML = lost.map(row).join('');
+  $('#my-found').innerHTML = found.map(row).join('');
 }
 
 /* ---------- inicialização ---------- */
 $$('[data-logo]').forEach(el => el.insertAdjacentHTML('afterbegin', LOGO));
 $$('[data-icon]').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
 $$('[data-icon-inline]').forEach(el => el.insertAdjacentHTML('afterbegin', icon(el.dataset.iconInline)));
+/* ============================================================
+   ENTRAR / CRIAR CONTA (fictício)
+   ============================================================ */
+let authMode = 'signup';
+function setAuthMode(m) {
+  authMode = m;
+  const signup = m === 'signup';
+  $('#t-entrar').textContent = signup ? 'Crie sua conta' : 'Entrar';
+  $('#auth-lead').textContent = signup ? 'É rapidinho e você só faz isso uma vez. Assim a gente consegue te avisar quando aparecer algo.' : 'Que bom te ver de novo.';
+  $('#auth-name-box').hidden = !signup;
+  $('#auth-pass').autocomplete = signup ? 'new-password' : 'current-password';
+  $('#auth-submit').textContent = signup ? 'Criar conta e continuar' : 'Entrar e continuar';
+  $('#auth-switch-text').textContent = signup ? 'Já tem uma conta?' : 'Ainda não tem conta?';
+  $('#auth-switch').textContent = signup ? 'Entrar' : 'Criar conta';
+  $('#auth-error').textContent = '';
+}
+function finishAuth(user) {
+  state.user = user;
+  store.set('quedi-user', user);
+  applyUser();
+  const next = state.next || 'inicio';
+  state.next = null;
+  location.hash = next;
+}
+function initials(n) { return n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('') || 'VC'; }
+function applyUser() {
+  const u = state.user;
+  $('#t-perfil').textContent = u ? u.name : 'Você';
+  $('#v-perfil .pf-avatar').textContent = u ? initials(u.name) : 'VC';
+}
+$('#auth-switch').addEventListener('click', () => setAuthMode(authMode === 'signup' ? 'login' : 'signup'));
+$('#auth-show').addEventListener('click', e => {
+  const b = e.currentTarget, show = $('#auth-pass').type === 'password';
+  $('#auth-pass').type = show ? 'text' : 'password';
+  b.setAttribute('aria-pressed', String(show));
+  b.setAttribute('aria-label', show ? 'Esconder senha' : 'Mostrar senha');
+});
+$('#auth-google').addEventListener('click', () => finishAuth({ name: 'Maria Souza', via: 'google' }));
+$('#auth-skip').addEventListener('click', () => finishAuth({ name: 'Visitante', via: 'demo' }));
+$('#auth-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const err = $('#auth-error');
+  const name = $('#auth-name').value.trim(), email = $('#auth-email').value.trim(), pass = $('#auth-pass').value;
+  if (authMode === 'signup' && name.split(/\s+/).length < 2) { err.textContent = 'Escreva seu nome e sobrenome.'; $('#auth-name').focus(); return; }
+  if (!/^\S+@\S+\.\S+$/.test(email)) { err.textContent = 'Confira o e-mail. Ele precisa ter @ e um domínio, como voce@email.com.'; $('#auth-email').focus(); return; }
+  if (pass.length < 6) { err.textContent = 'A senha precisa ter pelo menos 6 caracteres.'; $('#auth-pass').focus(); return; }
+  finishAuth({ name: authMode === 'signup' ? name : email.split('@')[0], via: 'email' });
+});
+$('#logout').addEventListener('click', () => {
+  state.user = null; store.del('quedi-user'); applyUser();
+  toast('Você saiu da conta.');
+  location.hash = 'inicio';
+});
+applyUser();
+
 window.addEventListener('hashchange', route);
 route();

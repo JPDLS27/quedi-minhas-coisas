@@ -9,6 +9,9 @@ const ICON_PATHS = {
   fone: '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.5"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5"/>',
   oculos: '<circle cx="6.5" cy="14" r="3.5"/><circle cx="17.5" cy="14" r="3.5"/><path d="M10 14h4M3 13l1.5-5M21 13l-1.5-5"/>',
   guardachuva: '<path d="M3 12a9 9 0 0 1 18 0z"/><path d="M12 12v7a2 2 0 0 1-4 0"/>',
+  bolsa: '<path d="M4.5 9.5h15l-1.3 10.2a1.5 1.5 0 0 1-1.5 1.3H7.3a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M8.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5"/>',
+  roupa: '<path d="M8.5 3.5L4 6l-1.5 4.5 3 1.2V20.5h13V11.7l3-1.2L20 6l-4.5-2.5a3.5 3.5 0 0 1-7 0z"/>',
+  acessorio: '<rect x="8" y="7" width="8" height="10" rx="2.5"/><path d="M9.5 7l.7-3.5h3.6l.7 3.5M9.5 17l.7 3.5h3.6l.7-3.5"/><path d="M12 10v2.2l1.4 1"/>',
   outro: '<path d="M4 8l8-4.5L20 8v8l-8 4.5L4 16z"/><path d="M4 8l8 4.5L20 8M12 12.5v8"/>',
   lupapin: '<circle cx="10.5" cy="10.5" r="7.5"/><path d="M16 16l5 5"/><path d="M10.5 14.6s-3-2.5-3-5a3 3 0 0 1 6 0c0 2.5-3 5-3 5z"/><circle cx="10.5" cy="9.6" r="1.1"/>',
   pin: '<path d="M12 21s-6.5-6.2-6.5-11.5a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/>',
@@ -34,23 +37,26 @@ function icon(name, extra = '') {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${ICON_PATHS[name] || ICON_PATHS.outro}</svg>`;
 }
 
-/* Logo: lupa com um alfinete de localização */
+/* Logo: lupa com um olho */
 const LOGO = `<svg viewBox="0 0 40 40" aria-hidden="true">
-  <path d="M27 27l9 9" stroke="#C2410C" stroke-width="5.5" stroke-linecap="round"/>
-  <circle cx="17" cy="17" r="13" fill="#FFC93C" stroke="#C2410C" stroke-width="4.5"/>
-  <path d="M17 25.5s-6-5-6-9.5a6 6 0 0 1 12 0c0 4.5-6 9.5-6 9.5z" fill="#C2410C"/>
-  <circle cx="17" cy="16" r="2.2" fill="#FFC93C"/>
+  <path d="M25.5 25.5l9 9" stroke="#2B1D12" stroke-width="5.5" stroke-linecap="round"/>
+  <circle cx="16.5" cy="16.5" r="12.5" fill="#FFF8EE" stroke="#2B1D12" stroke-width="4"/>
+  <ellipse cx="16.5" cy="17" rx="7" ry="6" fill="#fff"/>
+  <circle cx="17.2" cy="17.4" r="4" fill="#8C2F06"/>
+  <circle cx="17.5" cy="17.7" r="2" fill="#2B1D12"/>
+  <circle cx="15.8" cy="15.6" r="1.2" fill="#fff"/>
+  <path d="M10 11.5a8 8 0 0 1 5.5-3" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
 </svg>`;
 
-/* ---------- Dados do mapa (cidade fictícia) ---------- */
+/* ---------- Dados do mapa: lugares reais de Blumenau, traçado ilustrativo ---------- */
 const PLACES = [
   { id: 'univ', type: 'inst', x: 150, y: 128, name: 'FURB, Campus 1', info: '23 itens guardados · seg a sex, 8h às 18h', short: 'FURB', near: 'da FURB' },
-  { id: 'shop', type: 'inst', x: 585, y: 108, name: 'Shopping Ponte Verde', info: '41 itens guardados · todos os dias, 10h às 22h', short: 'Shopping', near: 'do Shopping' },
-  { id: 'rodo', type: 'inst', x: 655, y: 392, name: 'Terminal Rodoviário', info: '58 itens guardados · 24 horas', short: 'Rodoviária', near: 'da Rodoviária' },
-  { id: 'bibl', type: 'inst', x: 300, y: 335, name: 'Biblioteca Municipal', info: '9 itens guardados · ter a sáb, 9h às 19h', short: 'Biblioteca', near: 'da Biblioteca' },
-  { id: 'est1', type: 'estacao', x: 375, y: 205, name: 'Estação quedi Centro', info: 'Rua das Flores, 120 · 8h às 20h', short: 'Estação Centro' },
-  { id: 'est2', type: 'estacao', x: 185, y: 430, name: 'Estação quedi Vila Nova', info: 'Av. Brasil, 1.450 · 8h às 20h', short: 'Estação Vila Nova' },
-  { id: 'est3', type: 'estacao', x: 560, y: 268, name: 'Estação quedi Parque', info: 'Ao lado da entrada do parque · 9h às 18h', short: 'Estação Parque' },
+  { id: 'shop', type: 'inst', x: 585, y: 108, name: 'Shopping Neumarkt', info: '41 itens guardados · todos os dias, 10h às 22h', short: 'Shopping', near: 'do Shopping' },
+  { id: 'rodo', type: 'inst', x: 655, y: 392, name: 'Rodoviária de Blumenau', info: '58 itens guardados · 24 horas', short: 'Rodoviária', near: 'da Rodoviária' },
+  { id: 'bibl', type: 'inst', x: 300, y: 335, name: 'Biblioteca Fritz Müller', info: '9 itens guardados · ter a sáb, 9h às 19h', short: 'Biblioteca', near: 'da Biblioteca' },
+  { id: 'est1', type: 'estacao', x: 375, y: 205, name: 'Estação quedi Centro', info: 'Rua XV de Novembro · 8h às 20h', short: 'Estação Centro' },
+  { id: 'est2', type: 'estacao', x: 185, y: 430, name: 'Estação quedi Itoupava Seca', info: 'Rua São Paulo · 8h às 20h', short: 'Estação Itoupava Seca' },
+  { id: 'est3', type: 'estacao', x: 560, y: 268, name: 'Estação quedi Vila Germânica', info: 'Ao lado da Vila Germânica · 9h às 18h', short: 'Estação Vila Germânica' },
   { id: 'p1', type: 'perda', x: 455, y: 150, name: 'Chaves com chaveiro de gato', info: 'Perdidas ontem, por volta das 17h', short: '' },
   { id: 'p2', type: 'perda', x: 250, y: 238, name: 'Fone sem fio branco', info: 'Perdido hoje, perto do ponto de ônibus', short: '' },
   { id: 'p3', type: 'perda', x: 720, y: 205, name: 'Guarda-chuva verde', info: 'Perdido há 2 dias', short: '' }
@@ -87,9 +93,10 @@ function cityMap(opts = {}) {
   streetsH.forEach(y => { s += `<line x1="0" y1="${y}" x2="800" y2="${y}" stroke="#fff" stroke-width="12"/>`; });
   streetsV.forEach(x => { s += `<line x1="${x}" y1="0" x2="${x}" y2="520" stroke="#fff" stroke-width="12"/>`; });
   s += '<line x1="0" y1="520" x2="520" y2="0" stroke="#fff" stroke-width="16" opacity=".9"/>';
-  s += '<text x="92" y="57" class="pin-label" fill="#A8927E" style="font-weight:400;font-size:12px">Av. Brasil</text>';
-  s += '<text x="405" y="285" class="pin-label" fill="#A8927E" style="font-weight:400;font-size:12px">Rua das Flores</text>';
-  s += '<text x="590" y="300" class="pin-label" fill="#4E7A5B" style="font-weight:400;font-size:12px">Parque da Lagoa</text>';
+  s += '<text x="92" y="57" class="pin-label" fill="#A8927E" style="font-weight:400;font-size:12px">Rua 7 de Setembro</text>';
+  s += '<text x="236" y="285" class="pin-label" fill="#A8927E" style="font-weight:400;font-size:12px">Rua XV de Novembro</text>';
+  s += '<text x="590" y="300" class="pin-label" fill="#4E7A5B" style="font-weight:400;font-size:12px">Parque Ramiro Ruediger</text>';
+  s += '<text x="560" y="505" class="pin-label" fill="#5B7F99" style="font-weight:400;font-size:12px">Rio Itajaí-Açu</text>';
 
   // raio de alerta
   if (opts.pick) {
@@ -119,4 +126,99 @@ function cityMap(opts = {}) {
   }
   s += '</svg>';
   return s;
+}
+
+/**
+ * Dá vida a um mapa já desenhado por cityMap():
+ * - pessoas andando pelas ruas (pausa fora da tela e com "reduzir movimento");
+ * - toque/Enter num ponto mostra o nome do local;
+ * - com opts.pick, destaca e conta quem está dentro do raio (opts.onCount).
+ * opts.onPin(place) é chamado quando um ponto é escolhido.
+ */
+function mapLife(box, opts = {}) {
+  if (box._stop) box._stop();
+  const svg = box.querySelector('svg');
+  if (!svg) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* pessoas andando */
+  const H = [62, 172, 290, 400, 488], V = [70, 225, 395, 520, 690];
+  let seed = opts.seed || 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const layer = document.createElementNS(NS, 'g');
+  layer.setAttribute('aria-hidden', 'true');
+  const firstPin = svg.querySelector('.map-pin');
+  svg.insertBefore(layer, firstPin || null);
+  /* "você está aqui": ponto no meio com a área de alcance em volta */
+  if (opts.me) {
+    const me = document.createElementNS(NS, 'g');
+    me.setAttribute('class', 'me-dot');
+    me.setAttribute('aria-hidden', 'true');
+    me.innerHTML = `<circle cx="${opts.me.x}" cy="${opts.me.y}" r="${opts.me.r || 110}" fill="#C2410C" fill-opacity=".1" stroke="#C2410C" stroke-width="2" stroke-dasharray="6 6"/>
+      <circle class="me-pulse" cx="${opts.me.x}" cy="${opts.me.y}" r="12" fill="#C2410C" fill-opacity=".35"/>`;
+    svg.insertBefore(me, layer);
+    const dot = document.createElementNS(NS, 'g');
+    dot.setAttribute('aria-hidden', 'true');
+    dot.innerHTML = `<circle cx="${opts.me.x}" cy="${opts.me.y}" r="11" fill="#C2410C" stroke="#fff" stroke-width="4"/>
+      <text x="${opts.me.x}" y="${opts.me.y - 20}" text-anchor="middle" class="pin-label" paint-order="stroke" stroke="#FFF1DE" stroke-width="5">Você</text>`;
+    svg.appendChild(dot);
+    opts.pick = opts.pick || { x: opts.me.x, y: opts.me.y };
+  }
+  const walkers = [];
+  for (let i = 0; i < (opts.walkers || 24); i++) {
+    const horiz = i % 2 === 0, line = (horiz ? H : V)[Math.floor(rnd() * 5)], max = horiz ? 780 : 500;
+    const a = 20 + rnd() * (max - 260), b = Math.min(a + 160 + rnd() * 220, max);
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', 6); c.setAttribute('fill', '#A8927E'); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 2);
+    layer.appendChild(c);
+    walkers.push({ c, horiz, line, a, b, t: rnd() * Math.PI * 2, speed: 16 / (b - a), cur: 0, inside: null });
+  }
+  const R = opts.me ? (opts.me.r || 110) : 95;
+  let lastN = -1;
+  function place(dt) {
+    let n = 0;
+    walkers.forEach(w => {
+      w.t += dt * w.speed * Math.PI;
+      w.cur = w.a + (w.b - w.a) * (0.5 - 0.5 * Math.cos(w.t));
+      const x = w.horiz ? w.cur : w.line, y = w.horiz ? w.line : w.cur;
+      w.c.setAttribute('cx', x.toFixed(1)); w.c.setAttribute('cy', y.toFixed(1));
+      if (opts.pick) {
+        const inside = Math.hypot(x - opts.pick.x, y - opts.pick.y) < R;
+        if (inside) n++;
+        if (inside !== w.inside) { w.inside = inside; w.c.setAttribute('fill', inside ? '#8C2F06' : '#A8927E'); w.c.setAttribute('r', inside ? 8 : 6); }
+      }
+    });
+    if (opts.pick && opts.onCount && n !== lastN) { lastN = n; opts.onCount(n); }
+  }
+  place(0);
+  let raf = 0, prev = 0, visible = true;
+  const loop = ts => { const dt = prev ? Math.min((ts - prev) / 1000, .05) : 0; prev = ts; place(dt); raf = requestAnimationFrame(loop); };
+  const start = () => { if (!reduce && !raf && visible) { prev = 0; raf = requestAnimationFrame(loop); } };
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }) : null;
+  if (io) io.observe(box); else start();
+
+  /* nome do local ao tocar num ponto */
+  let tip = box.querySelector('.map-tip');
+  if (!tip) { tip = document.createElement('div'); tip.className = 'map-tip'; tip.setAttribute('role', 'status'); box.appendChild(tip); }
+  tip.hidden = true;
+  const showTip = p => {
+    tip.innerHTML = `<strong>${p.name}</strong><span>${p.info}</span>`;
+    tip.style.left = (p.x / 800 * 100) + '%';
+    tip.style.top = (p.y / 520 * 100) + '%';
+    tip.classList.toggle('is-below', p.y < 130);
+    tip.hidden = false;
+  };
+  svg.querySelectorAll('.map-pin').forEach(g => {
+    const p = PLACES.find(x => x.id === g.dataset.id);
+    g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.setAttribute('aria-label', p.name);
+    g.removeAttribute('aria-hidden');
+    const choose = e => { e.stopPropagation(); showTip(p); if (opts.onPin) opts.onPin(p); };
+    g.addEventListener('click', choose);
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(e); } });
+  });
+  svg.addEventListener('click', () => { tip.hidden = true; });
+  box.addEventListener('keydown', e => { if (e.key === 'Escape') tip.hidden = true; });
+
+  box._stop = () => { stop(); if (io) io.disconnect(); };
 }

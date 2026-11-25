@@ -34,7 +34,7 @@
           <h1 id="t-inicio">O que aconteceu?</h1>
           <p class="lead">Escolha uma opção. A gente guia você no resto.</p>
           <div class="map-box home-map" id="home-map"></div>
-          <p class="hint home-map-note">Pontos de achados e perdidos de instituições e Estações quedi perto de você.</p>
+          <ul class="map-legend" id="home-legend" aria-label="Legenda do mapa"></ul>
           <div class="tags" style="margin:1.6rem 0 3rem">
             <a class="tag tag-lost" href="#perdi"><span class="tag-text"><span class="tag-title">Perdi algo</span><span class="tag-sub">Descreva o item e veja os achados parecidos</span></span></a>
             <a class="tag tag-found" href="#achei"><span class="tag-text"><span class="tag-title">Achei algo</span><span class="tag-sub">Cadastre o item e ajude ele a voltar</span></span></a>
@@ -58,9 +58,9 @@
               <legend class="sr-only">O que você perdeu</legend>
               <h2 style="font-size:1.5rem">O que você perdeu?</h2>
               <div class="choices" id="lost-cats"></div>
-              <div class="field" style="margin-top:1.4rem">
-                <label for="lost-name">Dê um nome curto ao item</label>
-                <input type="text" id="lost-name" name="lost-name" autocomplete="off" placeholder="Ex.: Mochila azul da faculdade…">
+              <div class="field other-box" id="lostcat-other-box" hidden>
+                <label for="lostcat-other">Que tipo de item é?</label>
+                <input type="text" id="lostcat-other" name="lostcat-other" autocomplete="off" placeholder="Ex.: caixa de som, notebook, brinquedo…">
               </div>
             </fieldset>
 
@@ -70,8 +70,9 @@
               <h2 style="font-size:1.5rem">Como ele é?</h2>
               <p class="muted">Quanto mais detalhes, mais certeiros ficam os itens parecidos.</p>
               <div class="field">
-                <span class="label" id="lbl-cor">Cor principal</span>
-                <div class="swatches" role="radiogroup" aria-labelledby="lbl-cor" id="lost-colors"></div>
+                <span class="label" id="lbl-cor">Cores do item</span>
+                <p class="hint" style="margin-top:-.2rem">Marque todas as cores que aparecem nele.</p>
+                <div class="swatches" role="group" aria-labelledby="lbl-cor" id="lost-colors"></div>
               </div>
               <div class="row-2">
                 <div class="field"><label for="lost-brand">Marca</label><input type="text" id="lost-brand" name="lost-brand" autocomplete="off" placeholder="Ex.: Samsonite…"></div>
@@ -97,26 +98,22 @@
             <fieldset class="step" data-step="3" style="border:0;padding:0;margin:0" hidden>
               <legend class="sr-only">Onde e quando</legend>
               <h2 style="font-size:1.5rem">Onde e quando você perdeu?</h2>
-              <div class="choices choices-wide" style="margin-bottom:1.4rem">
-                <div class="choice">
-                  <input type="radio" name="where" id="where-inst" value="inst" checked>
-                  <label for="where-inst"><span class="ic" data-icon="predio"></span><span>Num lugar com achados e perdidos<small>Faculdade, shopping, rodoviária, biblioteca…</small></span></label>
+              <div class="field loc-search">
+                <label for="lost-loc">Local</label>
+                <div class="loc-input">
+                  <span class="loc-ico" data-icon="pin"></span>
+                  <input type="text" id="lost-loc" name="lost-loc" autocomplete="off" spellcheck="false"
+                    role="combobox" aria-expanded="false" aria-controls="loc-list" aria-autocomplete="list"
+                    placeholder="Pesquise um lugar, rua ou bairro…">
                 </div>
-                <div class="choice">
-                  <input type="radio" name="where" id="where-map" value="map">
-                  <label for="where-map"><span class="ic" data-icon="pin"></span><span>Em outro lugar<small>Marque no mapa e avisamos quem passou por perto</small></span></label>
-                </div>
+                <ul class="loc-list" id="loc-list" role="listbox" aria-label="Sugestões de lugares" hidden></ul>
               </div>
-              <div id="where-inst-box" class="field">
-                <label for="lost-inst">Qual lugar?</label>
-                <select id="lost-inst" name="lost-inst" autocomplete="off"></select>
-              </div>
-              <div id="where-map-box" hidden>
-                <p class="hint" style="margin-bottom:.6rem">Toque no mapa onde acha que perdeu.</p>
-                <div class="map-box pickable" id="lost-map"></div>
-                <p class="hint" style="margin-top:.8rem">Ou escolha um ponto de referência:</p>
-                <div class="landmarks" id="landmarks"></div>
-                <p class="hint" id="lost-map-msg" aria-live="polite" style="margin-top:.6rem"></p>
+              <p class="hint" style="margin:.2rem 0 .6rem">Ou toque no mapa para marcar o ponto exato.</p>
+              <div class="map-box pickable" id="lost-map"></div>
+              <p class="hint" id="lost-map-msg" aria-live="polite" style="margin-top:.6rem"></p>
+              <div class="field" style="margin-top:1rem">
+                <label for="lost-ref">Ponto de referência <span class="muted">(opcional)</span></label>
+                <input type="text" id="lost-ref" name="lost-ref" autocomplete="off" placeholder="Ex.: perto da padaria, em frente ao ponto de ônibus…">
               </div>
               <div class="row-2" style="margin-top:1.2rem">
                 <div class="field"><label for="lost-date">Dia</label><input type="date" id="lost-date" name="lost-date" autocomplete="off"></div>
@@ -260,6 +257,10 @@
               <span class="label">O que você achou?</span>
               <div class="choices" id="found-cats"></div>
             </div>
+              <div class="field other-box" id="foundcat-other-box" hidden>
+                <label for="foundcat-other">Que tipo de item é?</label>
+                <input type="text" id="foundcat-other" name="foundcat-other" autocomplete="off" placeholder="Ex.: caixa de som, notebook, brinquedo…">
+              </div>
             <div class="field">
               <span class="label">Foto do item</span>
               <label class="upload">
@@ -275,11 +276,21 @@
               <textarea id="found-desc" name="found-desc" autocomplete="off" placeholder="Ex.: mochila azul com adesivo de planeta…"></textarea>
               <p class="hint">Não descreva tudo. Deixe detalhes de fora para o dono confirmar.</p>
             </div>
-            <div class="row-2">
-              <div class="field">
-                <label for="found-where">Onde achou?</label>
-                <select id="found-where" name="found-where" autocomplete="off"></select>
+            <div class="field loc-search">
+              <label for="found-loc">Onde achou?</label>
+              <div class="loc-input">
+                <span class="loc-ico" data-icon="pin"></span>
+                <input type="text" id="found-loc" name="found-loc" autocomplete="off" spellcheck="false"
+                  role="combobox" aria-expanded="false" aria-controls="found-loc-list" aria-autocomplete="list"
+                  placeholder="Pesquise um lugar, rua ou bairro…">
               </div>
+              <ul class="loc-list" id="found-loc-list" role="listbox" aria-label="Sugestões de lugares" hidden></ul>
+            </div>
+            <p class="hint" style="margin:.2rem 0 .6rem">Ou toque no mapa para marcar o ponto exato.</p>
+            <div class="map-box pickable" id="found-map"></div>
+            <p class="hint" id="found-map-msg" aria-live="polite" style="margin-top:.6rem"></p>
+            <div class="row-2" style="margin-top:1rem">
+              <div class="field"><label for="found-ref">Ponto de referência <span class="muted">(opcional)</span></label><input type="text" id="found-ref" name="found-ref" autocomplete="off" placeholder="Ex.: no banco da praça…"></div>
               <div class="field"><label for="found-date">Quando?</label><input type="date" id="found-date" name="found-date" autocomplete="off"></div>
             </div>
             <div class="field">
@@ -327,40 +338,96 @@
       </section>
 
       <!-- ================= PERFIL ================= -->
-      <section class="view" id="v-perfil" aria-labelledby="t-perfil">
-        <div class="grid-2">
-          <div class="panel">
-            <div class="profile-top" style="display:flex;gap:1rem;align-items:center">
-              <div class="avatar" style="width:72px;height:72px;font-size:1.4rem">VC</div>
-              <div>
-                <h1 id="t-perfil" style="font-size:1.8rem;margin:0">Você</h1>
-                <span class="verified" data-icon-inline="escudo">Conta verificada</span>
+      <!-- ================= ENTRAR / CRIAR CONTA ================= -->
+      <section class="view" id="v-entrar" aria-labelledby="t-entrar">
+        <div class="narrow auth">
+          <h1 id="t-entrar" style="font-size:2.2rem">Crie sua conta</h1>
+          <p class="lead" id="auth-lead">É rapidinho e você só faz isso uma vez. Assim a gente consegue te avisar quando aparecer algo.</p>
+          <p class="auth-skip-row">Só olhando? <button type="button" class="link-btn" id="auth-skip">Pular login (demonstração)</button></p>
+          <button class="btn btn-quiet btn-google" type="button" id="auth-google">
+            <span class="g-mark" aria-hidden="true">G</span>Continuar com Google
+          </button>
+          <p class="auth-or"><span>ou com seu e-mail</span></p>
+          <form id="auth-form" novalidate>
+            <div class="field" id="auth-name-box">
+              <label for="auth-name">Nome e sobrenome</label>
+              <input type="text" id="auth-name" name="name" autocomplete="name" placeholder="Ex.: Maria Souza…">
+              <p class="hint">Aparece para as outras pessoas quando vocês combinarem uma devolução.</p>
+            </div>
+            <div class="field">
+              <label for="auth-email">E-mail</label>
+              <input type="email" id="auth-email" name="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="voce@email.com…">
+            </div>
+            <div class="field">
+              <label for="auth-pass">Senha</label>
+              <div class="pass-wrap">
+                <input type="password" id="auth-pass" name="password" autocomplete="new-password" placeholder="Pelo menos 6 caracteres…">
+                <button type="button" class="pass-toggle" id="auth-show" aria-label="Mostrar senha" aria-pressed="false" data-icon="olho"></button>
               </div>
             </div>
-            <div style="display:flex;gap:2rem;margin:1.5rem 0;flex-wrap:wrap">
-              <div><div class="points"><b>320</b><span>pontos</span></div></div>
-              <div><span class="rating">Nota 5,0</span><br><span class="muted small">em 3 devoluções</span></div>
+            <p class="hint" id="auth-error" role="alert" style="color:#B3261E;margin-bottom:1rem"></p>
+            <button class="btn btn-lago auth-submit" type="submit" id="auth-submit">Criar conta e continuar</button>
+          </form>
+          <p class="auth-switch"><span id="auth-switch-text">Já tem uma conta?</span> <button type="button" class="link-btn" id="auth-switch">Entrar</button></p>
+          <p class="hint auth-note">Protótipo: nenhum dado é enviado ou guardado fora deste navegador.</p>
+        </div>
+      </section>
+
+      <section class="view" id="v-perfil" aria-labelledby="t-perfil">
+        <div class="pf">
+          <header class="pf-head">
+            <div class="pf-id">
+              <div class="avatar pf-avatar">VC</div>
+              <div>
+                <h1 id="t-perfil">Você</h1>
+                <span class="pf-verified" data-icon-inline="escudo">Conta verificada</span>
+              </div>
+              <button type="button" class="link-btn pf-logout" id="logout">Sair da conta</button>
             </div>
-            <h2 style="font-size:1.2rem">Seus selos</h2>
-            <div class="seals">
+            <div class="pf-seals" aria-label="Seus selos">
               <span class="seal"><i data-icon="estrela"></i>Primeira devolução</span>
               <span class="seal"><i data-icon="coracao"></i>Coração bom</span>
-              <span class="seal" style="background:var(--bg);color:var(--ink-soft)"><i data-icon="cadeado" style="background:var(--line)"></i>Grande ajudante · faltam 2</span>
+              <span class="seal is-locked"><i data-icon="cadeado"></i>Grande ajudante · faltam 2</span>
             </div>
-            <div class="review">
-              <strong class="small">Avaliação de Ana, que recebeu os óculos de volta</strong>
-              <p class="muted">“Super atenciosa, deixou na Estação no mesmo dia.”</p>
+            <div class="pf-stats">
+              <div class="pf-stat st-sol"><b>320</b><span>pontos</span></div>
+              <div class="pf-stat st-cream"><b>5,0</b><span>nota média</span></div>
+              <div class="pf-stat st-deep"><b>3</b><span>itens devolvidos</span></div>
             </div>
-          </div>
-          <div>
-            <div class="panel">
-              <h2 style="font-size:1.3rem">Trocar pontos</h2>
-              <div class="choices choices-wide" id="redeem"></div>
-            </div>
-            <div class="panel" style="margin-top:1.5rem">
-              <h2 style="font-size:1.3rem">Meus itens</h2>
-              <div id="my-items"></div>
-            </div>
+          </header>
+
+          <div class="pf-grid">
+            <section class="pf-card pf-lost" aria-labelledby="t-perdi-list">
+              <h2 id="t-perdi-list"><span class="pf-ic" data-icon="lupapin"></span>Itens que perdi</h2>
+              <div id="my-lost"></div>
+            </section>
+            <section class="pf-card pf-found" aria-labelledby="t-achei-list">
+              <h2 id="t-achei-list"><span class="pf-ic" data-icon="mao"></span>Itens que encontrei</h2>
+              <div id="my-found"></div>
+            </section>
+            <section class="pf-card pf-reviews" aria-labelledby="t-aval">
+              <h2 id="t-aval"><span class="pf-ic" data-icon="estrela"></span>Avaliações</h2>
+              <div class="pf-review">
+                <div class="pf-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                <p>“Super atenciosa, deixou na Estação no mesmo dia.”</p>
+                <span>Ana, que recebeu os óculos de volta</span>
+              </div>
+              <div class="pf-review">
+                <div class="pf-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                <p>“Respondeu rápido no chat e combinou tudo certinho.”</p>
+                <span>Lucas, que recebeu o guarda-chuva</span>
+              </div>
+              <div class="pf-review">
+                <div class="pf-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                <p>“Muito educada, entregou na FURB entre uma aula e outra.”</p>
+                <span>Bruna, que recebeu a carteira</span>
+              </div>
+            </section>
+            <section class="pf-card pf-points" aria-labelledby="t-pts">
+              <h2 id="t-pts"><span class="pf-ic" data-icon="moeda"></span>Trocar meus pontos</h2>
+              <p class="pf-sub">Você tem <strong>320 pontos</strong>. Cada devolução vale 100.</p>
+              <div id="redeem"></div>
+            </section>
           </div>
         </div>
       </section>
