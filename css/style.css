@@ -761,3 +761,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--lago); outline: 
   .pf-points .redeem-row .btn { grid-column: 2; justify-self: start; }
   .pf-card { padding: 1.2rem; }
 }
+
+/* ---------- Cabeçalho laranja com "Abrir o site" em amarelo ---------- */
+.site-head { background: var(--lago); color: #fff; }
+.site-head .brand, .site-head .brand:hover { color: #fff; }
+.site-nav a { color: #fff; transition: background-color .2s ease; }
+@media (hover: hover) and (pointer: fine) { .site-nav a:not(.btn):hover { background: rgba(255, 255, 255, .16); } }
+.site-nav a[aria-current="page"] { background: #fff; color: var(--lago-deep); }
+.site-nav a.btn-lago, .site-nav a.btn-lago:hover { background: var(--sol); border-color: var(--sol); color: var(--ink); font-weight: 700; }
+.site-nav a:focus-visible, .site-head .brand:focus-visible { outline: 3px solid var(--sol); outline-offset: 3px; }
